@@ -1,0 +1,65 @@
+package xyz.sumtplus.service;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.LockerVO;
+import xyz.sumtplus.domain.RegInfoVO;
+import xyz.sumtplus.domain.SeatVO;
+import xyz.sumtplus.mapper.LockerMapper;
+import xyz.sumtplus.mapper.RegInfoMapper;
+import xyz.sumtplus.mapper.SeatMapper;
+
+/**
+ * 이용 등록 정보 서비스 구현 클래스
+ *
+ * @author 김보경
+ * @date   2021. 5. 17.
+ */
+@Service
+@Log4j
+@AllArgsConstructor
+@Transactional
+public class RegInfoServiceImpl implements RegInfoService{
+	private RegInfoMapper regMapper;
+	private SeatMapper seatMapper;
+	private LockerMapper lockerMapper;
+	
+	@Override
+	public int RegisterRegInfo(RegInfoVO infoVO) {
+		log.info("Service:: RegisterRegInfo");
+		SeatVO seatVO = new SeatVO();
+		seatVO.setUserNo(infoVO.getUserNo());
+		seatVO.setStatus(true);
+		seatVO.setSno(infoVO.getSeatNo());
+		seatMapper.updateStatus(seatVO);
+		if(infoVO.getLockerNo() != null) {
+			LockerVO lockerVO = new LockerVO();
+			lockerVO.setLno(infoVO.getLockerNo());
+			lockerVO.setStatus(true);
+			lockerVO.setUserNo(infoVO.getUserNo());
+			lockerMapper.updateStatus(lockerVO);
+		}
+		return regMapper.insertRegInfo(infoVO);
+	}
+
+	@Override
+	public int RegisterTmpReg(RegInfoVO infoVO) {
+		SeatVO seatVO = new SeatVO();
+		seatVO.setUserNo(infoVO.getUserNo());
+		seatVO.setStatus(true);
+		seatVO.setSno(infoVO.getSeatNo());
+		seatMapper.updateStatus(seatVO);
+		if(infoVO.getLockerNo() != null) {
+			LockerVO lockerVO = new LockerVO();
+			lockerVO.setLno(infoVO.getLockerNo());
+			lockerVO.setStatus(true);
+			lockerVO.setUserNo(infoVO.getUserNo());
+			lockerMapper.updateStatus(lockerVO);
+		}
+		return regMapper.insertTmpReg(infoVO);
+	}
+	
+}

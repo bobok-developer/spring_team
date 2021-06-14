@@ -1,0 +1,65 @@
+package xyz.sumtplus.controller;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.service.ChartService;
+
+/**
+ * 이용현황 컨트롤러
+ *
+ * @author 여름
+ * @date   2021. 5. 28.
+ */
+
+@Controller
+@Log4j
+@RequestMapping("/admin/*")
+@AllArgsConstructor
+public class ChartController {
+	
+	@Autowired
+	private ChartService service;
+
+	/* 이용 현황 */
+	@GetMapping("memberChart")
+	public void getMemberChart(Model model, @RequestParam(defaultValue = "2021") String year) {
+		log.info("이용 현황");
+		List<Map<String, Object>> chart = new ArrayList<Map<String, Object>>();
+		chart = service.getCount(year);
+		
+		model.addAttribute("chart", chart);
+	}
+	
+	/* 결제 현황 */
+
+	@GetMapping("payChart") // 월매출, 일매출
+	public void getPayChart(Model model, @RequestParam(defaultValue = "2021") String year, @RequestParam(defaultValue = "05") String month) {
+		log.info("결제 현황");
+		List<Map<String, Object>> monthChart = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> dayChart = new ArrayList<Map<String, Object>>();
+		
+		monthChart = service.getMonthPay(year);
+		dayChart = service.getDayPay(month);
+		
+		model.addAttribute("monthChart", monthChart);
+		model.addAttribute("dayChart", dayChart);
+	}
+
+	
+}

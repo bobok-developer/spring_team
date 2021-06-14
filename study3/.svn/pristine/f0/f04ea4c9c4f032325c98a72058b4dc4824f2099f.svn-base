@@ -1,0 +1,42 @@
+package xyz.sumtplus.service;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.RegInfoVO;
+
+/**
+ * 이용 등록 정보 서비스 테스트 클래스
+ *
+ * @author 김보경
+ * @date   2021. 5. 17.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+"file:src/main/webapp/WEB-INF/spring/security-context.xml"})
+@Log4j
+public class RegInfoServiceTests {
+	
+	@Autowired
+	private RegInfoService service;
+	
+	@Test
+	public void RegisterRegInfoTest() {
+		RegInfoVO infoVO = new RegInfoVO();
+		infoVO.setUserNo(51L);
+		infoVO.setUserName("민지현");
+		infoVO.setSeatNo(12);
+		//infoVO.setLockerNo(9);
+		infoVO.setFno(3);
+		infoVO.setFeeName("14일 요금제");
+		infoVO.setPeriod(14);
+		service.RegisterRegInfo(infoVO);
+		log.info(infoVO);
+	}
+	
+	
+}

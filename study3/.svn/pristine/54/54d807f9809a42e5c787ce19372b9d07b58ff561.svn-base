@@ -1,0 +1,63 @@
+package xyz.sumtplus.service;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.Criteria;
+import xyz.sumtplus.domain.MemberVO;
+import xyz.sumtplus.domain.RegInfoVO;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+"file:src/main/webapp/WEB-INF/spring/security-context.xml"})
+@Log4j
+public class AdminServiceTests {
+	
+	@Autowired
+	AdminService adminService;
+	
+	@Test
+	public void getMemberList(){
+		adminService.memberList(new Criteria(1,10)).forEach(log::info);
+	}
+	
+	@Test
+	public void getRegProperties(){
+		adminService.regProperties().forEach(log::info);
+	}
+	
+	@Test
+	public void getItemStatus(){
+		adminService.itemStatus().forEach(log::info);
+	}
+	
+	@Test
+	public void getMemberDeatil(){
+		log.info(adminService.memberDetail(3));
+	}
+	
+	@Test
+	public void updateMemberInfo(){
+		MemberVO memberVO = new MemberVO();
+		memberVO.setTel("123-456-0987");
+		memberVO.setEmail("ganada@hangual.com");
+		memberVO.setUserNo(16L);
+		adminService.updateMember(memberVO);
+		log.info(memberVO);
+	}
+	
+	@Test
+	public void updateRegPP(){
+		RegInfoVO regInfoVO = new RegInfoVO();
+		regInfoVO.setLockerNo(0);
+		regInfoVO.setSeatNo(0);
+		regInfoVO.setUserNo(10L);
+		adminService.updateRegPP(regInfoVO);
+		log.info(regInfoVO);
+	}
+	
+}

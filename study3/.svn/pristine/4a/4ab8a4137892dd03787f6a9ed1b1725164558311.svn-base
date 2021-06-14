@@ -1,0 +1,25 @@
+package xyz.sumtplus.service;
+
+import java.util.List;
+
+import xyz.sumtplus.domain.BoardVO;
+
+/**
+ * 게시판 서비스
+ *
+ * @author 이여름
+ * @date   2021. 5. 20.
+ */
+public interface BoardService {
+	
+	public void register(BoardVO board);
+	
+	public BoardVO get(Long bno);
+	
+	public boolean modify(BoardVO board);
+	
+	public boolean remove(Long bno);
+	
+	public List<BoardVO> getList();
+	
+}

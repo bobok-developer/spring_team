@@ -1,0 +1,65 @@
+package xyz.sumtplus.controller;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.RegInfoVO;
+import xyz.sumtplus.domain.SeatVO;
+import xyz.sumtplus.security.domain.CustomUser;
+import xyz.sumtplus.service.LockerService;
+import xyz.sumtplus.service.RegInfoService;
+import xyz.sumtplus.service.SeatService;
+
+/**
+ * 좌석/사물함 컨트롤러와 이용 등록 컨트롤러 클래스
+ *
+ * @author 김보경
+ * @date   2021. 5. 19.
+ */
+@Controller
+@Log4j
+@RequestMapping("/item/*")
+@AllArgsConstructor
+public class ItemController {
+	
+	private SeatService seatService;
+	private LockerService lockerService;
+	private RegInfoService regInfoService;
+	
+	@GetMapping("seat")
+	public void getSeat(Model model, Authentication auth){
+		log.info("좌석등록 페이지");
+		model.addAttribute("seatList", seatService.getAllList());
+		model.addAttribute("empLocList", lockerService.getEmptyLockerList());
+		model.addAttribute("regList", regInfoService.getAllList());
+		model.addAttribute("lockerList", lockerService.getAllList());
+		CustomUser user = (CustomUser) auth.getPrincipal();
+		log.warn(user.getVo().getUserNo());
+	}
+	
+	
+	@GetMapping("changeSeat")
+	public void changeSeat(Model model) {
+		log.info("좌석 변경 페이지..");
+		model.addAttribute("seatList", seatService.getAllList());
+		model.addAttribute("regList", regInfoService.getAllList());
+	}
+	
+	@PreAuthorize("authentication.principal.userNo == #infoVO.userNo")
+	@PostMapping("changeSeat")
+	public String changeSeatP(RegInfoVO infoVO, SeatVO seatVO, RedirectAttributes rttr) {
+		regInfoService.changeSeat(infoVO, seatVO);
+		rttr.addFlashAttribute("msg", "changeOK");
+		return "redirect:/item/seat";
+	}
+	
+
+}

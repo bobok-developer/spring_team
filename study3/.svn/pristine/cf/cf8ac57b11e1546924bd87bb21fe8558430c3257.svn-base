@@ -1,0 +1,8 @@
+package xyz.sumtplus.mapper;
+
+import xyz.sumtplus.domain.PaymentVO;
+
+public interface PaymentMapper {
+	
+	int insert(PaymentVO paymentVO);
+}

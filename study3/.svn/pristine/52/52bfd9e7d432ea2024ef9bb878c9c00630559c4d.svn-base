@@ -1,0 +1,23 @@
+package xyz.sumtplus.mapper;
+
+import java.util.Date;
+import java.util.List;
+
+import xyz.sumtplus.domain.RegInfoVO;
+
+/**
+ * 이용 등록 정보 맵퍼 인터페이스
+ *
+ * @author 김보경
+ * @date   2021. 5. 17.
+ */
+public interface RegInfoMapper {
+	// 등록 이용 정보 등록
+	int insertRegInfo(RegInfoVO infoVO);
+	
+	// 만료일 지난 정보 목록
+	List<RegInfoVO> getExpireInfo();
+	
+	// 만료일 지난 정보 삭제
+	int deleteRegInfo();
+}

@@ -1,0 +1,27 @@
+package xyz.sumtplus.domain;
+
+import java.util.Date;
+
+import lombok.Data;
+
+/**
+ * 이용현황 VO
+ *
+ * @author 여름
+ * @date   2021. 5. 26.
+ */
+
+@Data
+public class ChartVO {
+	private Long payNo;
+	private Long userNo;
+	private Long regNo;
+	private Date payDate;
+
+	private int payment;
+	
+	private String userName;
+	private String itemName;
+	
+	private Long count;
+}

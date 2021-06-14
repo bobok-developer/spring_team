@@ -1,0 +1,295 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt_rt" %>
+<jsp:include page="../includes/header_.jsp" />
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background_container prlx_parent">
+			<div class="home_background prlx" style="background-image:url(${pageContext.request.contextPath}/resources/images/news_background.jpg)"></div>
+		</div>
+		<div class="home_content">
+			<h1>좌석 등록/이용</h1>
+		</div>
+	</div>
+
+	<!-- News -->
+
+	<div class="news">
+		<div class="container">
+			<div class="d-flex justify-content-center mb-3"><h1>고정석</h1></div>
+			<div class="row">
+				<div id="room1" class="border px-5 py-5">
+					<div class="card-deck">
+						<c:forEach items="${seatList}" var="seat" begin="0" end="3">
+							<c:if test="${seat.status == true}">
+								<div class="card bg-warning">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 0${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <p class="card-text">이용중</p>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+						<c:forEach items="${seatList}" var="seat" begin="0" end="3">
+							<c:if test="${seat.status == false}">
+								<div class="card bg-muted">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 0${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <button type="button" id="sRegBtn" class="btn btn-sm btn-light" data-sno="${seat.sno}" value="${seat.sno}">등록</button>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+					
+					<div class="card-deck mt-4">
+						<c:forEach items="${seatList}" var="seat" begin="4" end="7">
+							<c:if test="${seat.status == true}">
+								<div class="card bg-warning">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 0${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <p class="card-text">이용중</p>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+						<c:forEach items="${seatList}" var="seat" begin="4" end="7">
+							<c:if test="${seat.status == false}">
+								<div class="card bg-muted">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 0${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <button type="button" id="sRegBtn" class="btn btn-sm btn-light" data-sno="${seat.sno}" value="${seat.sno}">등록</button>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+					
+					<div class="card-deck mt-4">
+						<c:forEach items="${seatList}" var="seat" begin="8" end="11">
+							<c:if test="${seat.status == true}">
+								<div class="card bg-warning">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 ${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <p class="card-text">이용중</p>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+						<c:forEach items="${seatList}" var="seat" begin="8" end="11">
+							<c:if test="${seat.status == false}">
+								<div class="card bg-muted">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 ${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <button type="button" id="sRegBtn" class="btn btn-sm btn-light" data-sno="${seat.sno}" value="${seat.sno}">등록</button>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+				</div> <!-- room1 -->
+				<!-- 좌석 선택 후 모달 -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				    <div class="modal-dialog" role="document">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <h3 class="modal-title" id="myModalLabel">이용 등록 정보</h3>
+				                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				                    <span aria-hidden="true">×</span>
+				                </button>
+				            </div>
+				            <form method="post">
+				            <div class="modal-body">
+				            	<div class="form-group">
+				            		<h3>좌석번호: <span id="curSno"></span> </h3>
+								    <label class="font-wieght-bold text-info">좌석 이용 기간 선택</label>
+								    <!-- 드롭다운으로 기간 선택 -->
+									<select id="period" name="period" class="form-control">
+										<option value="1">1일 (8,000)</option>
+										<option value="7">7일 (50,000)</option>
+										<option value="14">14일 (90,000)</option>
+										<option value="30">30일 (200,000)</option>
+									</select>
+				   				</div>
+				            	<div class="form-check addLocker"> <!-- 7일 이상 사용시 -->
+				            		<label class="form-check-label">
+				    					<input type="checkbox" class="form-check-input" onclick="showHideLocker(this)">사물함도 함께 이용하기.
+				    				</label>
+									<div id="showEmpLoc" class="form-check">
+										<c:set var="size" value="${fn:length(empLocList)}" />
+										<c:forEach var="i" begin="1" end="${size}">
+										    <label class="form-check-label">${empLocList[size - i].lno}</label><input type="radio" class="form-check-input ml-2" name="lockerNo" value="${empLocList[size - i].lno}">
+										</c:forEach>
+									</div>   				
+								</div>
+				            </div>
+				            <div class="modal-footer">
+				                <button type="submit" id="modalNextBtn" class="btn btn-warning btn-sm" data-dismiss="modal">다음으로</button>
+				            </div>
+				            <input type="hidden" name="seatNo" value="${sno}"> <!-- 좌석번호(button value) -->
+				            </form>
+				        </div>
+				    </div>
+				</div>
+				<!-- <script src="/resources/js/regInfo.js"> /* 등록 ajax 부분 */</script> -->
+				<div id="room2" class="border px-5 py-5 ml-3">
+					<div class="card-deck">
+						<c:forEach items="${seatList}" var="seat" begin="12" end="15">
+							<c:if test="${seat.status == true}">
+								<div class="card bg-warning">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 ${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <p class="card-text">이용중</p>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+						<c:forEach items="${seatList}" var="seat" begin="12" end="15">
+							<c:if test="${seat.status == false}">
+								<div class="card bg-muted">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 ${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <button type="button" id="sRegBtn" class="btn btn-sm btn-light" data-sno="${seat.sno}" value="${seat.sno}">등록</button>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+					<div class="card-deck mt-4">
+						<c:forEach items="${seatList}" var="seat" begin="16" end="19">
+							<c:if test="${seat.status == true}">
+								<div class="card bg-warning">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 ${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <p class="card-text">이용중</p>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+						<c:forEach items="${seatList}" var="seat" begin="16" end="19">
+							<c:if test="${seat.status == false}">
+								<div class="card bg-muted">
+								  <div class="card-body text-center">
+								    <p class="card-text">좌석 ${seat.sno}</p>
+								    <p class="card-text">${seat.name}</p>
+								    <button type="button" id="sRegBtn" class="btn btn-sm btn-light" data-sno="${seat.sno}" value="${seat.sno}">등록</button>
+								  </div>
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+				</div> <!-- end room2 -->
+			</div> <!-- end row -->
+			
+			<!-- 자유석 -->
+			<div class="d-flex justify-content-center mt-5"><h1>자유석</h1></div>
+			<div id="room3" class="border px-5 py-5 mr-3 mt-3">
+				<div class="card-deck">
+					<c:forEach items="${seatList}" var="seat" begin="20" end="27">
+						<c:if test="${seat.status == true}">
+							<div class="card bg-warning">
+							  <div class="card-body text-center">
+							    <p class="card-text">좌석 ${seat.sno}</p>
+							    <p class="card-text">${seat.name}</p>
+							    <p class="card-text">이용중</p>
+							  </div>
+							</div>
+						</c:if>
+					</c:forEach>
+					<c:forEach items="${seatList}" var="seat" begin="20" end="27">
+						<c:if test="${seat.status == false}">
+							<div class="card bg-muted">
+							  <div class="card-body text-center">
+							    <p class="card-text">좌석 ${seat.sno}</p>
+							    <p class="card-text">${seat.name}</p>
+							    <button type="button" id="sRegBtn" class="btn btn-sm btn-light" data-sno="${seat.sno}" value="${seat.sno}">등록</button>
+							  </div>
+							</div>
+						</c:if>
+					</c:forEach>
+				</div>
+				<!--  --> 
+				<div class="card-deck mt-4">
+					<c:forEach items="${seatList}" var="seat" begin="28" end="35">
+						<c:if test="${seat.status == true}">
+							<div class="card bg-warning">
+							  <div class="card-body text-center">
+							    <p class="card-text">좌석 ${seat.sno}</p>
+							    <p class="card-text">${seat.name}</p>
+							    <p class="card-text">이용중</p>
+							  </div>
+							</div>
+						</c:if>
+					</c:forEach>
+					<c:forEach items="${seatList}" var="seat" begin="28" end="35">
+						<c:if test="${seat.status == false}">
+							<div class="card bg-muted">
+							  <div class="card-body text-center">
+							    <p class="card-text">좌석 ${seat.sno}</p>
+							    <p class="card-text">${seat.name}</p>
+							    <button type="button" id="sRegBtn" class="btn btn-sm btn-light" data-sno="${seat.sno}" value="${seat.sno}">등록</button>
+							  </div>
+							</div>
+						</c:if>
+					</c:forEach>
+					<script>
+					$(function() { //ready
+						$("#sRegBtn").click(function() {
+							var result = confirm($(this).attr('value') + "번 좌석을 등록하시겠습니까?");
+							var sno = $(this).data("sno"); /* 등록 버튼에 해당하는 좌석 번호 */
+							console.log("해당 좌석 번호:: " + sno);
+							if(result) {
+								$("#curSno").text(sno);
+								$("#myModal").modal("show");
+							} else {
+								// no
+							}
+						});
+					
+						$(".addLocker").hide();
+						
+						$("#period").change(function() {
+							var selOpt = $("#period option:selected").val();
+							console.log("selOpt:: " + selOpt);
+							/* 일일 이용자는 사물함 이용 불가 (셀렉트 옵션 밸류가 1일 때) */
+							selOpt == 1 ? $(".addLocker").hide() : $(".addLocker").show();
+						})
+						/* 이용 정보 모달창에서 다음으로 버튼 눌렀을 때 */
+					/* 	$("#modalNextBtn").click(function() {
+							//console.log("sno:: " + $(#curSno.val()));
+							//console.log("lockerNo:: " + lockerNo);
+							regInfoService.add({sno:"4", lno:"4", fno:"1", period:period, feeName:"test요금제", userNo:"51", userName:"유저"},
+									function(result) {
+								alert(result);
+							});
+						}) */
+						
+						$("#showEmpLoc").hide();
+					});
+				
+					function showHideLocker(obj) {
+						var locker = document.getElementById('showEmpLoc');
+						if(obj.checked) {
+							locker.style.display = "block";
+						} else {
+							locker.style.display = "none";
+						}
+					}
+				</script>
+				</div> 
+				<!--  -->
+			</div> <!-- end room3 -->
+		</div>
+	</div> <!-- news 끝 -->
+<jsp:include page="../includes/footer.jsp" />

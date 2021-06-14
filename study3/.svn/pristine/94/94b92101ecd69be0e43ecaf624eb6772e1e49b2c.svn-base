@@ -1,0 +1,43 @@
+package xyz.sumtplus.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.mapper.ChartMapper;
+
+/**
+ * 이용현황 차트
+ *
+ * @author 여름
+ * @date   2021. 5. 26.
+ */
+
+@Service
+@Log4j
+@AllArgsConstructor
+public class ChartServiceImpl implements ChartService {
+	
+	@Autowired
+	private ChartMapper chartMapper;
+	
+	
+	@Override
+	public List<Map<String, Object>> getChart() {
+		log.info("Service :: getChart");
+		return chartMapper.getChart();	
+	}
+
+
+	@Override
+	public List<Map<String, Object>> getMonthChart(long year) {
+		return chartMapper.getMonthChart(year);
+	}
+	
+
+	
+}

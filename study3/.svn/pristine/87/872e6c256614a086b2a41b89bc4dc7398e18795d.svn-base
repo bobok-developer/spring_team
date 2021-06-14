@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.PaymentMapper">
+
+	<!-- 결제 -->
+	<insert id="insert" >
+		INSERT INTO TBL_PAYMENT(PAYNO, USERNO, USERNAME, REGNO, PAYMENT, ITEMNAME) 
+			VALUES(SEQ_PAYMENT.NEXTVAL, #{userNo}, #{userName}, #{regNo}, #{payment}, #{itemName})
+	</insert>
+	
+	<select id="selectFee" resultType="xyz.sumtplus.domain.FeeVO">
+		SELECT FNO, NAME, PRICE, PERIOD FROM TBL_FEE 
+		WHERE FNO= #{fno}
+	</select>
+	
+</mapper>

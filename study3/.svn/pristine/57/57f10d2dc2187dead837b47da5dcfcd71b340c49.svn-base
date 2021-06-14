@@ -1,0 +1,18 @@
+package xyz.sumtplus.service;
+
+import xyz.sumtplus.domain.ReplyVO;
+
+public class replyServiceTest {
+	
+	
+	public void testRegister() {
+		/*ReplyVO reply = new ReplyVO();
+		reply.setReply("댓글 테스트");
+		reply.setReplyer("작성자");
+		reply.setRegDate("날짜");
+
+		service.register(reply);
+		
+		log.info("생성된 게시물의 번호 : " + reply.getBno());*/
+	}
+}

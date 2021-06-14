@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.SeatMapper">
+
+	<!-- 모든 좌석 조회 -->
+	<select id="getAllList" resultType="xyz.sumtplus.domain.SeatVO">
+		SELECT * FROM TBL_SEAT
+		ORDER BY SNO
+	</select>
+	
+	<!-- 빈 좌석 조회 -->
+	<select id="getEmptySeatList" resultType="xyz.sumtplus.domain.SeatVO">
+		SELECT SNO, NAME FROM TBL_SEAT
+		WHERE STATUS = 0
+		ORDER BY SNO
+	</select>
+	
+	<!-- 좌석 상태 변경 -->
+	<update id="updateStatus">
+		UPDATE TBL_SEAT SET
+    		STATUS = #{status},
+    		USERNO = #{userNo}
+		WHERE SNO = #{sno}
+	</update>
+	
+	<!-- 좌석 변경 시 새 좌석 상태를 이용중으로 변경 -->
+	<update id="updateNewSeat">
+	UPDATE TBL_SEAT SET
+    	STATUS = 1,
+    	USERNO = #{userNo}
+	WHERE SNO = (
+    	SELECT SEATNO FROM TBL_REGiNFO WHERE USERNO = #{userNo}
+	)
+	</update>
+	<!-- 좌석 변경 시 기존 좌석 상태를 빈좌석으로 변경 -->
+	<update id="updateOldSeat">
+	UPDATE TBL_SEAT SET STATUS = 0, USERNO = 0
+	WHERE SNO = #{sno}
+	</update>
+	
+	<!-- 이용 등록 정보 삭제 시 빈 좌석으로 변경 -->
+	<update id="delInfoupdateSeat">
+	UPDATE TBL_SEAT SET
+    STATUS = 0,
+    USERNO = 0
+	WHERE USERNO = #{userNo}
+	</update>
+</mapper>

@@ -1,0 +1,48 @@
+package xyz.sumtplus.controller;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.service.ChartService;
+
+
+@Controller
+@Log4j
+@RequestMapping("/admin/*")
+@AllArgsConstructor
+public class ChartController {
+	
+	@Autowired
+	private ChartService service;
+	
+	@GetMapping("memberChart")
+	public void getMemberChart(Model model) {
+		log.info("이용 현황");
+		List<Map<String, String>> chart = new ArrayList<Map<String,String>>();
+		
+/*		String year;
+		// getData 안에 스트링 변수인 Year가 들어가야함  
+		model.addAttribute("list", service.getData(year));*/
+	}
+	
+	/*@GetMapping("/")
+	public void get() {
+		log.info("chart...");
+		
+	}
+	
+	@GetMapping("getData") @ResponseBody
+	public List<Map<String, Object>> getData(@PathVariable String month) {
+		return chartMapper.getData(month);
+	}*/
+}

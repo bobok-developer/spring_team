@@ -1,0 +1,45 @@
+package xyz.sumtplus.mapper;
+
+import java.util.List;
+import xyz.sumtplus.domain.RegInfoVO;
+
+/**
+ * 이용 등록 정보 맵퍼 인터페이스
+ *
+ * @author 김보경
+ * @date   2021. 5. 17.
+ */
+public interface RegInfoMapper {
+	// 이용 등록 정보 등록
+	int insertRegInfo(RegInfoVO infoVO);
+	
+	// 결제 전 임시 테이블에 등록
+	int insertTmpReg(RegInfoVO infoVO);
+	
+	// 임시 테이블 데이터 조회
+	List<RegInfoVO> getTmpList();
+	
+	// 만료일 지난 정보 목록
+	List<RegInfoVO> getExpireInfo();
+	
+	// 만료일 지난 정보 삭제
+	int deleteRegInfo();
+	
+	// 임시 등록 데이터 삭제
+	int deleteTmpReg();
+	
+	// 이용 기간 연장 (이용 등록 정보 수정)
+	int updatePeriod(RegInfoVO infoVO);
+
+	// 이용 등록 정보 목록 조회
+	List<RegInfoVO> getAllList();
+	
+	// 이용 등록 정보 상세 조회
+	RegInfoVO getDetail(Long userNo);
+	
+	// 좌석 변경 (이용 등록 정보 수정)
+	public int updateSeat(RegInfoVO infoVO);
+	
+	// 결제 미완료 된 임시 등록 정보 목록
+	List<RegInfoVO> getTmpToRegList();
+}

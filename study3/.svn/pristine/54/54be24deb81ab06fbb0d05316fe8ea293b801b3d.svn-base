@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.BoardMapper">
+	
+	<!--조회-->
+	<!-- <select id="getList" resultType="xyz.sumtplus.domain.BoardVO" >
+	<![CDATA[
+		SELECT * FROM TBL_BOARD WHERE BNO > 0
+	]]>
+	</select> -->
+
+
+   	<select id="getList" resultType="xyz.sumtplus.domain.BoardVO">
+		<![CDATA[
+		    SELECT 
+		    /*+ INDEX_DESC(TBL_BOARD PK_BOARD)*/
+		    *
+		    FROM TBL_BOARD
+		    WHERE BNO > 0
+		]]>
+  	</select>
+
+
+  	<select id="getListWithPaging" resultType="xyz.sumtplus.domain.BoardVO">
+		<![CDATA[
+		WITH TMP AS(
+		    SELECT 
+		    /*+ INDEX_DESC(TBL_BOARD PK_BOARD)*/
+		    ROWNUM RN, TBL_BOARD.*
+		    FROM TBL_BOARD
+		    WHERE
+		]]>
+		<![CDATA[
+		     BNO > 0
+		    AND ROWNUM<= #{pageNum} * #{amount}
+		    )
+		SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, REPLYCNT FROM TMP
+		WHERE RN > (#{pageNum} -1) * #{amount}
+		]]>
+  	</select>
+
+	
+	
+	<!--게시판 조회 1-->
+	<select id="getPage" resultType="xyz.sumtplus.domain.BoardVO">
+
+	SELECT  /*+ INDEX_DESC(TBL_BOARD PK_BOARD)*/
+	FROM TBL_BOARD
+	WHERE 1 = 1
+	AND BNO > 0
+	ORDER BY BNO desc, REGDATE desc
+	</select>
+	
+	
+	<!--작성 -->
+  	<insert id="insert">
+	  	INSERT INTO TBL_BOARD (BNO, TITLE, WRITER, CONTENT, REGDATE, CATEGORY, SECRET) 
+  	<!--이외의 데이터값 많음, 일단 NOT NULL만 -->
+			VALUES (SEQ_BOARD.NEXTVAL, #{title}, #{writer}, #{content}, SYSDATE, #{category}, #{secret})
+  	</insert>
+  	
+  	
+  	<!--수정-->
+  	<update id="update">
+  	UPDATE TBL_BOARD SET
+  		TITLE = #{title},
+  		WRITER = #{content},
+  		CONTENT = #{writer},
+  		REGDATE = SYSDATE
+  	WHERE BNO = #{bno}
+	</update>
+  	
+  	<!--삭제-->
+  	<delete id="delete">
+  		DELETE TBL_BOARD WHERE BNO = #{bno}
+  	</delete>
+
+  	<!--상세-->
+  	<select id="read" resultType="xyz.sumtplus.domain.BoardVO">
+  			SELECT * FROM TBL_BOARD WHERE BNO = #{bno}  
+  	</select>
+
+</mapper>

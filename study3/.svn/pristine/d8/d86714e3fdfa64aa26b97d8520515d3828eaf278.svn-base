@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.ChartMapper">
+	
+	<select id="getChart" resultType="map">
+		<![CDATA[
+		SELECT * FROM TBL_PAYMENT WHERE PAYNO > 0
+		]]>
+	</select>
+	
+	<!-- 연간 월별 이용자 쿼리 (데이터가 없는 달은 0으로 표기) -->
+	<select id="getData" resultType="map">
+		<![CDATA[
+		SELECT MONTH, NVL(B.CNT, 0) CNT FROM(
+		    SELECT
+		        DECODE(LENGTH(ROWNUM),
+		        1,'0'||TO_CHAR(ROWNUM), TO_CHAR(ROWNUM)) MONTH,
+		        0 CNT
+		        FROM DICT
+		        WHERE ROWNUM < 13
+		) A
+		LEFT OUTER JOIN (
+		        SELECT 
+		           TO_CHAR(PAYDATE, 'MM') AS MONTH,
+		           COUNT(*) AS CNT
+		        FROM TBL_PAYMENT
+		        WHERE TO_CHAR(PAYDATE, 'YYYY') = #{year}
+		        GROUP BY TO_CHAR(PAYDATE, 'MM')
+		) B USING(MONTH)
+		ORDER BY 1
+		]]>
+		<!-- 0은 출력하지 않는 쿼리 -->
+		<!-- SELECT 
+		       TO_CHAR(PAYDATE, 'YYYY/MM') MONTH,
+		       COUNT(PAYNO) CNT
+			FROM TBL_PAYMENT
+			WHERE TO_CHAR(PAYDATE, 'YYYY') = #{year}
+			GROUP BY TO_CHAR(PAYDATE, 'YYYY/MM')
+			ORDER BY TO_CHAR(PAYDATE, 'YYYY/MM') -->
+	</select>
+
+		<!-- 연간 월별 매출 쿼리 (데이터가 없는 달은 0으로 표기) -->
+	<select id="getData2" resultType="map">
+		<![CDATA[
+		SELECT MONTH, NVL(B.PAY, 0) PAY FROM(
+			    SELECT
+				        DECODE(LENGTH(ROWNUM),
+				        1,'0'||TO_CHAR(ROWNUM), TO_CHAR(ROWNUM)) MONTH,
+				        0 PAY
+				        FROM DICT
+				        WHERE ROWNUM < 13
+			) A
+			LEFT OUTER JOIN (
+		                SELECT
+		                TO_CHAR(PAYDATE, 'MM') AS MONTH,
+		                    SUM(PAYMENT) AS PAY
+		                FROM TBL_PAYMENT
+		                WHERE TO_CHAR(PAYDATE, 'YYYY') = #{year}
+		                GROUP BY TO_CHAR(PAYDATE, 'MM')    
+			) B USING(MONTH)
+		ORDER BY 1
+		]]>
+	</select>
+
+</mapper>

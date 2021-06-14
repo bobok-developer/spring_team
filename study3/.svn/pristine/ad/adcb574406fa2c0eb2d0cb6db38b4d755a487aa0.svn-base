@@ -1,0 +1,82 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="./includes/header_.jsp" />
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/styles/bootstrap4/popper.js"></script>
+<script src="${pageContext.request.contextPath}/resources/styles/bootstrap4/bootstrap.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+
+
+	<!-- Home -->
+
+
+	<div class="home">
+		<div class="home_background_container prlx_parent">
+			<div class="home_background prlx" style="background-image:url(${pageContext.request.contextPath}/resources/images/news_background.jpg)"></div>
+		
+		</div>
+		<div class="home_content">
+			<h1>등록/이용안내</h1>
+		</div>
+	</div>
+
+	<!-- News -->
+
+	<style>
+	/* CSS used here will be applied after bootstrap.css */
+	.ekko-lightbox-nav-overlay a {
+	    color: goldenrod;
+	}
+	.gallery-title {
+	    text-align: center;
+		font-weight: 500;
+		border-bottom: 1px dotted orange;
+		margin-top: 1em;
+	}
+	</style>
+
+	<div class="news">
+		<div class="container">
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="page-title">Projects</h1>
+        <h3 class="gallery-title">Gallery 1</h3>
+        <div class="row">
+        
+        	
+        
+            <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox" data-gallery="example-gallery" class="col-lg-3 col-md-4 col-6 my-3">
+                <img src="https://unsplash.it/600.jpg?image=251" class="img-fluid card">
+            </a>
+            <a href="https://unsplash.it/1200/768.jpg?image=252" data-toggle="lightbox" data-gallery="example-gallery" class="col-lg-3 col-md-4 col-6 my-3">
+                <img src="https://unsplash.it/600.jpg?image=252" class="img-fluid card">
+            </a>
+            <a href="https://unsplash.it/1200/768.jpg?image=253" data-toggle="lightbox" data-gallery="example-gallery" class="col-lg-3 col-md-4 col-6 my-3">
+                <img src="https://unsplash.it/600.jpg?image=253" class="img-fluid card">
+            </a>
+            <a href="https://unsplash.it/1200/768.jpg?image=254" data-toggle="lightbox" data-gallery="example-gallery" class="col-lg-3 col-md-4 col-6 my-3">
+                <img src="https://unsplash.it/600.jpg?image=254" class="img-fluid card">
+            </a>
+            <a href="https://unsplash.it/1200/768.jpg?image=255" data-toggle="lightbox" data-gallery="example-gallery" class="col-lg-3 col-md-4 col-6 my-3">
+                <img src="https://unsplash.it/600.jpg?image=255" class="img-fluid card">
+            </a>
+            <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-gallery="example-gallery" class="col-lg-3 col-md-4 col-6 my-3">
+                <img src="https://unsplash.it/600.jpg?image=256" class="img-fluid card">
+            </a>
+        </div>
+    </div>
+</div>
+
+	<script>
+	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+	    event.preventDefault();
+	    $(this).ekkoLightbox({alwaysShowClose: true});
+	});
+	</script>
+	
+		
+
+			</div> <!-- 본문 끝 -->
+		</div>
+	</div>
+<jsp:include page="./includes/footer.jsp" />

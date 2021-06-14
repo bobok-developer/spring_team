@@ -1,0 +1,26 @@
+package xyz.sumtplus.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Select;
+
+import xyz.sumtplus.domain.ChartVO;
+
+
+/**
+ * 이용현황 mapper
+ *
+ * @author 여름
+ * @date   2021. 5. 26.
+ */
+
+public interface ChartMapper {
+
+	public List<ChartVO> getList();
+	
+	public List<ChartVO> count();
+	
+	/*List<Map<String, Object>> getData(String Month);*/
+	
+}

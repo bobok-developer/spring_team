@@ -1,0 +1,69 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri = "http://www.springframework.org/security/tags" prefix="sec" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Course</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Course Project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/styles/bootstrap4/bootstrap.min.css">
+<link href="${pageContext.request.contextPath}/resources/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/styles/responsive.css">
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header class="header d-flex flex-row">
+		<div class="header_content d-flex flex-row align-items-center">
+			<!-- Logo -->
+			<div class="logo_container">
+				<div class="logo">
+					<a href="${pageContext.request.contextPath}/index">
+					<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="">
+					<span>course</span></a>
+				</div>
+			</div>
+
+			<!-- Main Navigation -->
+			<nav class="main_nav_container">
+				<div class="main_nav">
+					<ul class="main_nav_list">
+						<li class="main_nav_item"><a href="${pageContext.request.contextPath}/index">home</a></li>
+						<li class="main_nav_item"><a href="${pageContext.request.contextPath}/aboutUs">독서실 소개</a></li>
+						<li class="main_nav_item drop-down dropdown-toggle" data-toggle="dropdown"><a href="#">등록/이용</a> <!-- 드롭다운으로 사물함/ 좌석 -->
+						<li class="dropdown-menu">
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/item/seat">좌석등록/이용</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/item/locker">사물함등록/이용</a>
+						</li>
+						<li class="main_nav_item"><a href="news.html">news</a></li>
+						<li class="main_nav_item"><a href="contact.html">contact</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="header_side d-flex flex-row justify-content-center align-items-center">
+			<a href="${pageContext.request.contextPath}/login">로그인</a>
+			<a href="${pageContext.request.contextPath}/join">회원가입</a>
+			<a href="${pageContext.request.contextPath}/admin/admin">관리자페이지</a>
+			<%-- <img src="${pageContext.request.contextPath}/resources/images/phone-call.svg" alt="">
+			<span>+43 4566 7788 2457</span> --%>
+		</div>
+
+		<!-- Hamburger -->
+		<div class="hamburger_container">
+			<i class="fas fa-bars trans_200"></i>
+		</div>
+
+	</header>

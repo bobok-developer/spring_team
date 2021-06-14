@@ -1,0 +1,269 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html dir="ltr" lang="kor">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Adminmart Template - The Ultimate Multipurpose admin template</title>
+    <!-- Custom CSS -->
+    <link href="${pageContext.request.contextPath}/resources/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="${pageContext.request.contextPath}/resources/dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment-with-locales.min.js" integrity="sha512-+4wyLnVjbJnGld2sKt9RE0zwcDRmr2KimlbeYRRMZFqfKYV2o69ncGWG12VGMySqnPKZXpT8qq+p8OZJIZsTkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <div class="logo_container">
+							<div class="logo">
+								<a href="${pageContext.request.contextPath}/index">
+								<img src="${pageContext.request.contextPath}/resources/images/logo.png" alt="" width="230px">
+								</a>
+							</div>
+						</div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- Logo -->
+			
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar" data-sidebarbg="skin6">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/admin/admin"
+                                aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
+                                    class="hide-menu">관리자 홈</span></a></li>
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">회원관리</span></li>
+
+                        <li class="sidebar-item"> <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/memberList"
+                                aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span
+                                    class="hide-menu">회원정보</span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/admin/memberChart"
+                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
+                                    class="hide-menu">회원이용현황</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/admin/memberContact"
+                                aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
+                                    class="hide-menu">회원에게 연락하기</span></a></li>
+
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">좌석/ 사물함 관리</span></li>
+                        
+                        <%-- <li class="sidebar-item"> <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/itemStatus"
+                                aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
+                                    class="hide-menu">좌석관리 </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="form-inputs.html" class="sidebar-link"><span
+                                            class="hide-menu"> Form Inputs
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="form-input-grid.html" class="sidebar-link"><span
+                                            class="hide-menu"> Form Grids
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="form-checkbox-radio.html" class="sidebar-link"><span
+                                            class="hide-menu"> Checkboxes &
+                                            Radios
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </li> --%>
+                        <li class="sidebar-item"> <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/admin_seat"
+                                aria-expanded="false"><i data-feather="grid" class="feather-icon"></i><span
+                                    class="hide-menu">좌석관리</span></a>
+                            <!-- <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="table-basic.html" class="sidebar-link"><span
+                                            class="hide-menu"> Basic Table
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="table-dark-basic.html" class="sidebar-link"><span
+                                            class="hide-menu"> Dark Basic Table
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="table-sizing.html" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Sizing Table
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="table-layout-coloured.html" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Coloured
+                                            Table Layout
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="table-datatable-basic.html" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Basic
+                                            Datatables
+                                            Layout
+                                        </span></a>
+                                </li>
+                            </ul> -->
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link" href="${pageContext.request.contextPath}/item/locker"
+                                aria-expanded="false"><i data-feather="bar-chart" class="feather-icon"></i><span
+                                    class="hide-menu">사물함관리 </span></a>
+                            <!-- <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="chart-morris.html" class="sidebar-link"><span
+                                            class="hide-menu"> Morris Chart
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="chart-chart-js.html" class="sidebar-link"><span
+                                            class="hide-menu"> ChartJs
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="chart-knob.html" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Knob Chart
+                                        </span></a>
+                                </li>
+                            </ul> -->
+                        </li>
+                        <!-- <li class="sidebar-item"> <a class="sidebar-link" href="javascript:void(0)"
+                                aria-expanded="false"><i data-feather="box" class="feather-icon"></i><span
+                                    class="hide-menu">등록현황 </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="ui-buttons.html" class="sidebar-link"><span
+                                            class="hide-menu"> Buttons
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="ui-modals.html" class="sidebar-link"><span
+                                            class="hide-menu"> Modals </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="ui-tab.html" class="sidebar-link"><span
+                                            class="hide-menu"> Tabs </span></a></li>
+                                <li class="sidebar-item"><a href="ui-tooltip-popover.html" class="sidebar-link"><span
+                                            class="hide-menu"> Tooltip &
+                                            Popover</span></a></li>
+                                <li class="sidebar-item"><a href="ui-notification.html" class="sidebar-link"><span
+                                            class="hide-menu">Notification</span></a></li>
+                                <li class="sidebar-item"><a href="ui-progressbar.html" class="sidebar-link"><span
+                                            class="hide-menu">Progressbar</span></a></li>
+                                <li class="sidebar-item"><a href="ui-typography.html" class="sidebar-link"><span
+                                            class="hide-menu">Typography</span></a></li>
+                                <li class="sidebar-item"><a href="ui-bootstrap.html" class="sidebar-link"><span
+                                            class="hide-menu">Bootstrap
+                                            UI</span></a></li>
+                                <li class="sidebar-item"><a href="ui-breadcrumb.html" class="sidebar-link"><span
+                                            class="hide-menu">Breadcrumb</span></a></li>
+                                <li class="sidebar-item"><a href="ui-list-media.html" class="sidebar-link"><span
+                                            class="hide-menu">List
+                                            Media</span></a></li>
+                                <li class="sidebar-item"><a href="ui-grid.html" class="sidebar-link"><span
+                                            class="hide-menu"> Grid </span></a></li>
+                                <li class="sidebar-item"><a href="ui-carousel.html" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Carousel</span></a></li>
+                                <li class="sidebar-item"><a href="ui-scrollspy.html" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Scrollspy</span></a></li>
+                                <li class="sidebar-item"><a href="ui-toasts.html" class="sidebar-link"><span
+                                            class="hide-menu"> Toasts</span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="ui-spinner.html" class="sidebar-link"><span
+                                            class="hide-menu"> Spinner </span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                                aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span
+                                    class="hide-menu">Cards
+                                </span></a>
+                        </li> -->
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">등록정보관리</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/admin/regProperties"
+                                aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span
+                                    class="hide-menu">등록정보</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
+                                aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
+                                    class="hide-menu">등록정보차트</span></a></li>
+
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">결제관리</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/admin/paymentList"
+                                aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span
+                                    class="hide-menu">결제정보</span></a></li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>

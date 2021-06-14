@@ -1,0 +1,38 @@
+package xyz.sumtplus.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+@Controller
+@Log4j
+//@RequestMapping("/index*")
+@AllArgsConstructor
+public class IndexController {
+	
+	@GetMapping("index")
+	public void index(){
+		log.info("index... start");
+		log.info("indexList......");
+		
+	}
+	
+	@GetMapping("innerPage")
+	public void innerPage() {
+		log.info("innerPage..");
+	}
+	
+	@GetMapping("aboutUs")
+	public void aboutUs() {
+		log.info("aboutUs..");
+	}
+	
+	@GetMapping("payment")
+	public void payment() {
+		log.info("payment..");
+	}
+}

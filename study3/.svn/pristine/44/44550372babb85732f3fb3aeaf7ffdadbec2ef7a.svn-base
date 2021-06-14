@@ -1,0 +1,36 @@
+package xyz.sumtplus.mapper;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.SeatVO;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@Log4j
+public class SeatMapperTests {
+	@Autowired
+	private SeatMapper mapper;
+	
+	@Test
+	public void getAllListTest() {
+		mapper.getAllList().forEach(log::info);
+	}
+	@Test
+	public void getEmptySeatListTest() {
+		mapper.getEmptySeatList().forEach(log::info);
+	}
+	@Test
+	public void updateStatusTest() {
+		SeatVO seatVO = new SeatVO();
+		seatVO.setStatus(true);
+		seatVO.setUserNo(3L);
+		seatVO.setSno(1);
+		mapper.updateStatus(seatVO);
+		log.info(seatVO);
+	}
+}

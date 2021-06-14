@@ -1,0 +1,39 @@
+package xyz.sumtplus.domain;
+
+import java.util.Date;
+import java.util.List;
+
+import lombok.Data;
+
+/**
+ * 이용등록정보 클래스
+ *
+ * @author 박재우
+ * @Date   2021. 5. 18.
+ */
+@Data
+public class RegInfoVO {
+	
+	private Long regNo; // 등록번호
+	
+	private Long userNo; // 회원번호
+	
+	private String userName; // 회원 이름
+	
+	private Date startDate; // 시작일
+	
+	private Date endDate; // 종료일
+	
+	private int fno; // 요금제 번호
+	
+	private Integer seatNo; // 좌석번호
+	
+	private Integer lockerNo; // 사물함번호
+	
+	private String feeName; // 좌석(사물함) 기간명
+	
+	private LockerVO locker; // 사물함 정보 불러오기
+	
+	private SeatVO seat; // 좌석 정보 불러오기
+	
+}

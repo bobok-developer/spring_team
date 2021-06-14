@@ -1,0 +1,70 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+<jsp:include page="./includes/header_.jsp" />
+	<!-- Home -->
+	<%-- <img src="${pageContext.request.contextPath}/resources/images/news_background.jpg"> --%>
+	<div class="home">
+		<div class="home_background_container prlx_parent">
+			<div class="home_background prlx" style="background-image:url(${pageContext.request.contextPath}/resources/images/news_background.jpg)"></div>
+		</div>
+		<div class="home_content">
+			<h1>Sign up</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-4 mt-3" style="text-align: center;">
+		     <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/join">
+		        <div style="font-size:2vw; text-align: center">회원가입</div>
+		        <table class="table table-boardered">
+		            <tr>
+		                <th>아이디</th>
+		                <td><input name="userId" type="text" class="form-control" value="wwww" ></td>        
+		            </tr>
+		            <tr>
+		                <th>패스워드</th>
+		                <td><input name="userPw" class="form-control" type="password" value="1111"></td>      
+		            </tr>
+		            <tr>
+		                <th>이름</th>
+		                <td><input name="userName" class="form-control" type="text" maxlength="10" value="류"></td>        
+		            </tr>
+		            <tr>
+		                <th>이메일</th>
+		                <td><input name="email" class="form-control" type="text" value="u8253@naver.com" > </td>       
+		            </tr>
+		            <tr>
+		                <th>전화번호</th>
+		                <td><input name="tel" class="form-control" type="text"> </td>       
+		            </tr>
+		            <tr>
+		                <th>주소</th>
+		                <td><input type="text" class="form-control" name="address" readonly><button type="button" class="btn btn-info mt-2" style="width: 510px;" onclick="goPopup();" >주소검색</button></td>      
+		            </tr>
+		             <tr>
+		                <td colspan="2">
+		                <button class="btn" type="submit">Sign up </button>
+		                </td>
+		            </tr>
+		        </table>
+		        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		    </form>
+		    <p class="mediuen">Do have an account? <a href="${pageContext.request.contextPath}/customLogin">login here!</a></p>
+		</div>
+		<div class="col-4"></div>
+	</div>
+<jsp:include page="./includes/footer.jsp" />
+
+<script>
+	function goPopup() {
+		var pop = window.open("/member/jusoPoup.jsp", "pop", "width=570, height=420, scrollbars=yes, resizable=yes" );
+	}
+	function jusoCallBack(roadFullAddr) {
+		var addressEl = document.querySeletor("#address");
+		addressEl.value = roadFullAddr;
+	}
+</script>

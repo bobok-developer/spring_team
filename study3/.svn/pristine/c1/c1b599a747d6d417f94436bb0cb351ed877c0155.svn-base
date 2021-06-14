@@ -1,0 +1,32 @@
+package xyz.sumtplus.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.service.SeatService;
+
+@Controller
+@Log4j
+@RequestMapping("/item/*")
+@AllArgsConstructor
+public class ItemController {
+	
+	private SeatService service;
+	
+	@GetMapping("seat")
+	public void getSeat(Model model){
+		log.info("좌석등록 페이지");
+		model.addAttribute("seatList", service.getAllList());
+	}
+	
+	@GetMapping("locker")
+	public void getLocker(){
+		log.info("사물함 페이지");
+	}
+	
+
+}

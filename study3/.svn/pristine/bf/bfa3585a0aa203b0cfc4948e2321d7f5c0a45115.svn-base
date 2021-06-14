@@ -1,0 +1,259 @@
+package xyz.sumtplus.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.AddressVO;
+import xyz.sumtplus.domain.BoardVO;
+import xyz.sumtplus.domain.Criteria;
+import xyz.sumtplus.domain.LockerVO;
+import xyz.sumtplus.domain.MemberVO;
+import xyz.sumtplus.domain.PaymentVO;
+import xyz.sumtplus.domain.RegInfoVO;
+import xyz.sumtplus.domain.SeatVO;
+import xyz.sumtplus.mapper.AdminMapper;
+import xyz.sumtplus.mapper.LockerMapper;
+import xyz.sumtplus.mapper.MemberMapper;
+import xyz.sumtplus.mapper.SeatMapper;
+
+
+/**
+ * 관리자의 서비스Impl입니다
+ *
+ * @author 박재우
+ * @Date   2021. 5. 18.
+ */
+@Service
+@Log4j
+@AllArgsConstructor
+public class AdminServiceImpl implements AdminService{
+	private AdminMapper mapper;
+	private MemberMapper memberMapper;
+	private SeatMapper seatMapper;
+	private LockerMapper lockerMapper;
+	
+	public List<RegInfoVO> itemStatus() {
+		// TODO Auto-generated method stub
+		log.warn("itemStatus()...");
+		
+		return mapper.itemStatus();
+	}
+
+	@Override
+	public List<MemberVO> memberList(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("memberList()...");
+		
+		return mapper.memberList(cri);
+	}
+
+	@Override
+	public List<PaymentVO> paymentList(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("paymentList()...");
+		
+		return mapper.paymentList(cri);
+	}
+
+	@Override
+	public List<RegInfoVO> regProperties(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("regProperties()...");
+		
+		return mapper.regProperties(cri);
+	}
+
+	@Override
+	public MemberVO memberDetail(int userNo) {
+		// TODO Auto-generated method stub
+		log.warn("memberDetail()...");
+		
+		return mapper.memberDetail(userNo);
+	}
+
+	@Override
+	public AddressVO memberAddr(int userNo) {
+		// TODO Auto-generated method stub
+		log.warn("회원의 주소");
+		return mapper.memberAddr(userNo);
+	}
+
+	@Override
+	@Transactional
+	public void updateMember(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		log.warn("updateMember()...");
+		mapper.updateMember(memberVO);
+		
+		Long userNo = memberMapper.findUserNoBy(memberVO.getUserId()); 
+		
+		memberVO.getAddress().setUserNo(userNo);
+		log.warn(memberVO.getAddress());
+		mapper.deleteAddr(memberVO);
+		mapper.updateAddr(memberVO.getAddress());
+	}
+
+	
+	@Override
+	@Transactional
+	public void updateRegPP(RegInfoVO regInfoVO) {
+		// TODO Auto-generated method stub
+		log.warn("updateRegPP()....");
+		mapper.updateRegPP(regInfoVO);
+		mapper.deleteSeat(regInfoVO);
+		mapper.deleteLocker(regInfoVO);
+		mapper.updateSeat(regInfoVO);
+		mapper.updateLocker(regInfoVO);
+	}
+
+	@Override
+	public RegInfoVO regDetail(int regNo) {
+		// TODO Auto-generated method stub
+		log.warn("register detail...");
+		return mapper.regDetail(regNo);
+	}
+
+	@Override
+	public int getMemberTotal(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("get total count...");
+		return mapper.getMemberTotalCount(cri);
+	}
+
+	@Override
+	public int getRegTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("get total count...");
+		return mapper.getRegTotalCount(cri);
+	}
+
+	@Override
+	public int getPaymentTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("get total count...");
+		return mapper.getPaymentTotalCount(cri);
+	}
+
+	@Override
+	public MemberVO sendMessage() {
+		// TODO Auto-generated method stub
+		log.warn("5일 남은 회원을 불러옵니다...");
+		return mapper.sendMessage();
+	}
+
+	@Override
+	public List<MemberVO> memberContactList(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("기간을 기준으로 회원을 불러옵니다...");
+		return mapper.memberContactList(cri);
+	}
+
+	@Override
+	public int getMemberContactTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.warn("get Contact total count...");
+		return mapper.getMemberContactTotalCount(cri);
+	}
+	@Override
+	public List<LockerVO> getEmptyLockerList() {
+		log.info("Service:: getEmptySeatList");
+		return mapper.getEmptyLockerList();
+	}
+	
+	@Override
+	public List<SeatVO> getEmptySeatList() {
+		log.info("Service:: getEmptySeatList");
+		return mapper.getEmptySeatList();
+	}
+	
+	@Override
+	public List<BoardVO> getNotiList() {
+		log.warn("관리자가 공지사항을 불러옵니다");
+		return mapper.getNotiList();
+	}
+	
+	@Override
+	public List<BoardVO> getQAList() {
+		log.warn("관리자가 Q&A를 불러옵니다");
+		return mapper.getQAList();
+	}
+	
+	@Override
+	public int getTotalImcome() {
+		log.warn("현재까지 번 돈을 불러옵니다");
+		return mapper.getTotalImcome();
+	}
+	
+	
+
+	/**
+	 * 회원 중 좌석/사물함 미등록 회원 목록 조회
+	 * @author 김보경
+	 * @Date 2021. 5. 28.
+	 */
+	@Override
+	public List<MemberVO> getUnregListTest(Criteria cri) {
+		return mapper.getUnregList(cri);
+	}
+
+	/**
+	 * 좌석배치도에 이용 중인 상태와 회원 이름과 만료일 보여주는 메서드
+	 * (관리자-좌석관리에서 이용)
+	 * @author 김보경
+	 * @Date 2021. 5. 29.
+	 */
+	@Override
+	public List<Map<String, Object>> showSeatPlanInfo() {
+		log.warn(mapper.getSeatPlanList());
+		return mapper.getSeatPlanList();
+	}
+
+	/**
+	 * 좌석배치도에서 이용 중인 회원의 등록을 취소하는 메서드
+	 * (관리자-좌석관리에서 이용)
+	 * @author 김보경
+	 * @Date 2021. 5. 31.
+	 */
+	@Override
+	@Transactional
+	public void revokeTheRegistration(Long userNo) {
+		log.warn("등록 취소 될 회원 번호:: " + userNo);
+		mapper.deleteRegInfo(userNo);
+		/* 이용 중이던 좌석/사물함 빈 상태로 변경 트랜잭션 */
+		seatMapper.delInfoupdateSeat(userNo);
+		lockerMapper.delInfoupdateLocker(userNo);
+	}
+	
+	/**
+	 * 사물함 배치도에 이용 중인 상태와 회원 이름과 만료일 보여주는 메서드
+	 * (관리자-사물함관리에서 이용)
+	 * @author 김보경
+	 * @Date 2021. 6. 1.
+	 */
+	@Override
+	public List<Map<String, Object>> showLockerPlanInfo() {
+		log.warn(mapper.getLockerPlanList());
+		return mapper.getLockerPlanList();
+	}
+
+	/**
+	 * 사물함배치도에서 이용 중인 사물함 등록을 취소하는 메서드
+	 * (관리자-사물함관리에서 이용)
+	 * @author 김보경
+	 * @Date 2021. 6. 1.
+	 */
+	@Override
+	@Transactional
+	public void revokeLocker(Long userNo) {
+		log.warn(mapper.deleteLocInfo(userNo));
+		lockerMapper.delInfoupdateLocker(userNo);
+	}
+
+	
+}

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.BoardMapper">
+	<sql id="cri">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+   			<foreach item="type" collection="typeArr">
+   				<trim prefix="OR">
+   					<choose>
+   						<when test="type == 'T'.toString()">
+   							TITLE LIKE '%' || #{keyword} || '%'
+   						</when>
+   						<when test="type == 'C'.toString()">
+   							CONTENT LIKE '%' || #{keyword} || '%'
+   						</when>
+   						<when test="type == 'W'.toString()">
+   							WRITER LIKE '%' || #{keyword} || '%'
+   						</when>
+   					</choose>
+   				</trim>
+   			</foreach>
+   		</trim>
+	</sql>	
+  	<select id="getListWithPaging" resultType="xyz.sumtplus.domain.BoardVO">
+		<![CDATA[
+			SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, category, replyCnt
+			FROM
+			(
+			SELECT /*+ INDEX_DESC(TBL_BOARD SYS_C0012459) */
+			ROWNUM RN, BNO, TITLE, CONTENT, WRITER, REGDATE, category, replyCnt
+			FROM
+				TBL_BOARD
+			WHERE category=#{category}
+			]]>	
+   		<include refid="cri" />   		
+   		<![CDATA[ 	
+			 ROWNUM <= #{pageNum} * #{amount}
+			)
+			WHERE RN > (#{pageNum} -1) * #{amount}
+		]]>
+  	</select>
+
+  	
+	<!-- 답글 -->
+	<select id="getList2" resultType="xyz.sumtplus.domain.BoardVO">
+		<![CDATA[
+		SELECT BNO, TITLE, CONTENT, WRITER, REGDATE, replyCnt, parentno, groupno
+			FROM
+			(
+			SELECT /*+ INDEX_DESC(TBL_BOARD TBL_BOARD_PK) */
+			ROWNUM RN, BNO, TITLE, CONTENT, WRITER, REGDATE, replyCnt, parentno, groupno
+			FROM
+				TBL_BOARD
+            WHERE
+            ]]>	
+   		<include refid="cri" />   		
+   		<![CDATA[ 
+   		 bno>0 and ROWNUM <= #{pageNum} * #{amount}
+                START WITH parentno = 0
+                CONNECT BY PRIOR bno = parentno
+                ORDER SIBLINGS BY groupno DESC, bno ASC
+			
+			)
+			WHERE RN > (#{pageNum} -1) * #{amount}
+			]]> 
+	</select>
+	
+	
+	<select id="getTotalCount" resultType="int">
+           <![CDATA[
+           SELECT count(*) FROM TBL_BOARD WHERE
+           ]]>
+           <include refid="cri" />
+           <![CDATA[
+           BNO > 0
+            ]]>
+    </select>
+
+   	<select id="getList" resultType="xyz.sumtplus.domain.BoardVO">
+		<![CDATA[
+			SELECT BNO, TITLE, WRITER, REGDATE, HITCOUNT
+			/*+ INDEX_DESC(TBL_BOARD PK_BOARD)*/
+			 FROM TBL_BOARD
+			WHERE BNO > 0
+		]]>
+  	</select>
+
+
+	<!--작성 -->
+  	<insert id="insert">
+	  	INSERT INTO TBL_BOARD (BNO, TITLE, WRITER, CONTENT, CATEGORY, SECRET) 
+			VALUES (SEQ_BOARD.NEXTVAL, #{title}, #{writer}, #{content}, #{category}, #{secret})
+  	</insert>
+  	
+  	<insert id="insertSelectKey"> <!-- 원글 -->
+  		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+  			SELECT SEQ_BOARD.NEXTVAL FROM DUAL
+  		</selectKey>
+  		INSERT INTO TBL_BOARD (BNO, TITLE, WRITER, CONTENT, CATEGORY, parentno, groupno)
+  		VALUES (#{bno}, #{title}, #{writer}, #{content}, #{category}, 0, #{bno})
+  	</insert>
+  	
+  	
+  	<insert id="insertSelectKey2"> <!-- 답글 -->
+  		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+  			SELECT SEQ_BOARD.NEXTVAL FROM DUAL
+  		</selectKey>
+  		INSERT INTO TBL_BOARD (BNO, TITLE, WRITER, CONTENT, CATEGORY, PARENTNO, GROUPNO)
+  		VALUES (#{bno}, #{title}, #{writer}, #{content}, #{category}, #{parentNo}, #{groupNo})
+  	</insert>
+  	
+  	<!--수정-->
+  	<update id="update">
+  	UPDATE TBL_BOARD SET
+  		TITLE = #{title},
+  		WRITER = #{writer},
+  		CONTENT = #{content}
+  	WHERE BNO = #{bno}
+	</update>
+  	
+  	<!--삭제-->
+  	<delete id="delete">
+  		DELETE TBL_BOARD WHERE BNO = #{bno}
+  	</delete>
+
+  	<!--상세-->
+  	<select id="read" resultType="xyz.sumtplus.domain.BoardVO">
+			SELECT BNO, TITLE, WRITER, REGDATE, HITCOUNT, CONTENT
+			 FROM TBL_BOARD
+			WHERE BNO = #{bno}
+			<!-- 첨부파일추가필요 -->
+  	</select>
+
+
+
+	
+</mapper>

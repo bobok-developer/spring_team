@@ -1,0 +1,28 @@
+package xyz.sumtplus.mapper;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import xyz.sumtplus.domain.AuthVO;
+import xyz.sumtplus.domain.MemberVO;
+
+/**
+ * 맴버맵퍼 인터페이스
+ *
+ * @author 류슬희
+ * @date   2021. 5. 19.
+ */
+public interface MemberMapper {
+	MemberVO read(Long userNo);
+	
+	@Insert("INSERT INTO TBL_MEMBER (USERNO, USERID, USERPW, USERNAME, TEL, EMAIL, ADDRESS) VALUES (SEQ_MEMBER.NEXTVAL, #{userId}, #{userPw}, #{userName}, #{tel}, #{email}, #{address})")
+	void insert(MemberVO memberVO);
+	
+	@Insert("INSERT INTO TBL_MEMBER_AUTH (USERNO, AUTH) VALUES (#{userNo}, 'ROLE_MEMBER')")
+	void insertAuth(AuthVO authVo);
+	
+	
+	@Select("SELECT USERNO FROM TBL_MEMBER WHERE USERID = #{userId}")
+	Long findUserNoBy(@Param("userId") String userId);
+}

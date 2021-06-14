@@ -1,0 +1,104 @@
+package xyz.sumtplus.controller;
+
+import java.text.SimpleDateFormat;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.FeeVO;
+import xyz.sumtplus.domain.PaymentVO;
+import xyz.sumtplus.domain.RegInfoVO;
+import xyz.sumtplus.security.domain.CustomUser;
+import xyz.sumtplus.service.PaymentService;
+import xyz.sumtplus.service.RegInfoService;
+
+@Controller
+@Log4j
+@RequestMapping("/payment/*")
+@AllArgsConstructor
+public class PaymentController {
+	@Autowired
+	private PaymentService paymentservice;
+	@Autowired
+	private RegInfoService reginfoservice;
+	
+	@GetMapping("payment")
+	public void getPayment() {
+		log.info("payment..");
+	}
+	
+	@PostMapping("payment")
+	public void postPayment(RegInfoVO regInfoVO, Integer fno2, Model model) {
+//	public void postPayment(RegInfoVO regInfoVO, Model model) {
+		log.info("payment..." + regInfoVO);
+		FeeVO feeVO = paymentservice.findBy(regInfoVO.getFno());
+		model.addAttribute("feeVO", feeVO);
+		log.info("feeVO : " + feeVO);
+		if(fno2 != null) {
+			FeeVO feeVO2 = paymentservice.findBy(fno2);
+			model.addAttribute("feeVO2", feeVO2);
+			log.info("feeVO2 : " + feeVO2);
+			}
+		reginfoservice.RegisterTmpReg(regInfoVO);
+	}
+	
+	@PostMapping("payComplete")
+	public void payComplete(PaymentVO paymentVO, RegInfoVO regInfoVO, Model model) {
+		log.info("payment......");
+		log.info("reginfoVO" + regInfoVO);
+		log.info("paymentVO" + paymentVO);
+		Long regNo = paymentservice.pay(paymentVO, regInfoVO);
+		model.addAttribute("regNo", regNo);
+		log.info("regNo..." + regNo);
+	}
+	
+	@PostMapping("expayComplete")
+	public void payExComplete(PaymentVO paymentVO, RegInfoVO regInfoVO, Model model) {
+		log.info("payment......");
+		log.info("reginfoVO" + regInfoVO);
+		log.info("paymentVO" + paymentVO);
+		paymentservice.extendPayment(paymentVO, regInfoVO);
+//		model.addAttribute("regNo", regNo);
+//		log.info("regNo..." + regNo);
+	}
+	
+	@GetMapping("payTest")
+	public void payTest() {
+		log.info("payTest..");
+	}
+	
+	@GetMapping("exPayment")
+	public void getExPayment(Model model, Authentication auth) {
+		log.info("기간 연장 결제 페이지..");
+		CustomUser user = (CustomUser) auth.getPrincipal();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		RegInfoVO regInfoVO = reginfoservice.read(user.getVo().getUserNo());
+		String endDate = sdf.format(regInfoVO.getEndDate());
+		FeeVO feeVO = paymentservice.findBy(regInfoVO.getFno());
+		
+		model.addAttribute("regList", reginfoservice.getAllList());
+		model.addAttribute("endDate",endDate);
+		model.addAttribute("feeVO", feeVO);
+	}
+	
+	@PostMapping("exPayment")
+	public void postExPayment(RegInfoVO regInfoVO, Model model) {
+		log.info("exPayment..." + regInfoVO);
+		FeeVO feeVO = paymentservice.findBy(regInfoVO.getFno());
+		model.addAttribute("feeVO", feeVO);
+		log.info("feeVO : " + feeVO);
+//		if(fno2 != null) {
+//			FeeVO feeVO2 = paymentservice.findBy(fno2);
+//			model.addAttribute("feeVO2", feeVO2);
+//			log.info("feeVO2 : " + feeVO2);
+//			}
+		reginfoservice.extendUsingPeriod(regInfoVO);
+	}
+}

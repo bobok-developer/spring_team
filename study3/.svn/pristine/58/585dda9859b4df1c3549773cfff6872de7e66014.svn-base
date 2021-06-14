@@ -1,0 +1,69 @@
+package xyz.sumtplus.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.FeeVO;
+import xyz.sumtplus.domain.LockerVO;
+import xyz.sumtplus.domain.PaymentVO;
+import xyz.sumtplus.domain.RegInfoVO;
+import xyz.sumtplus.domain.SeatVO;
+import xyz.sumtplus.mapper.LockerMapper;
+import xyz.sumtplus.mapper.PaymentMapper;
+import xyz.sumtplus.mapper.RegInfoMapper;
+import xyz.sumtplus.mapper.SeatMapper;
+
+
+/**
+ * 클래스/인터페이스 설명
+ * 결제서비스 구현
+ *
+ * @author 민지현
+ * @date 2021. 5. 18.
+ */
+@Service
+@Log4j
+public class PaymentServiceImpl implements PaymentService{
+	@Autowired
+	private PaymentMapper paymentMapper;
+	@Autowired
+	private RegInfoMapper reginfoMapper;
+	@Autowired
+	private SeatMapper seatMapper;
+	@Autowired
+	private LockerMapper lockerMapper;
+	
+	@Override
+	@Transactional
+	public long pay(PaymentVO paymentVO, RegInfoVO regInfoVO) {
+		reginfoMapper.insertRegInfo(regInfoVO);
+		Long regno = regInfoVO.getRegNo();
+		log.info("regno..." + regno);
+		paymentVO.setRegNo(regno);
+		log.info("paymentVO" + paymentVO);
+		SeatVO seatVO = new SeatVO();
+		seatVO.setUserNo(regInfoVO.getUserNo());
+		seatVO.setStatus(true);
+		seatVO.setSno(regInfoVO.getSeatNo());
+		seatMapper.updateStatus(seatVO);
+		if(regInfoVO.getLockerNo() != null) {
+			LockerVO lockerVO = new LockerVO();
+			lockerVO.setLno(regInfoVO.getLockerNo());
+			lockerVO.setStatus(true);
+			lockerVO.setUserNo(regInfoVO.getUserNo());
+			lockerMapper.updateStatus(lockerVO);
+		}
+		paymentMapper.insert(paymentVO);
+		return regno;
+	}
+
+	@Override
+	public FeeVO findBy(Integer fno) {
+		log.info("findBy..."+fno);
+		return paymentMapper.selectFee(fno);
+	}
+
+	
+}

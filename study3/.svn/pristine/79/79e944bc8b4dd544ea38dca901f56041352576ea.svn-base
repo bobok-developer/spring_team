@@ -1,0 +1,7 @@
+package xyz.sumtplus.mapper;
+
+import xyz.sumtplus.domain.AuthVO;
+
+public interface MemberAuthMapper {
+	public void insert(AuthVO auth);
+}

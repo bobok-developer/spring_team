@@ -1,0 +1,512 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="../includes/adminHeader.jsp" />
+
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">관리자 홈</h3>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0 p-0">
+                                    <li class="breadcrumb-item">Dashboard
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- *************************************************************** -->
+                <!-- Start First Cards -->
+                <!-- *************************************************************** -->
+                <!-- *************************************************************** -->
+                <!-- End First Cards -->
+                <!-- *************************************************************** -->
+                <!-- *************************************************************** -->
+                <!-- Start Sales Charts Section -->
+                <!-- *************************************************************** -->
+                <div class="row">
+                    <div class="col-lg-5 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">월별 이용자 수 현황</h4>
+                                <canvas id="memberChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">매출 현황</h4>
+                                <canvas id="payChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *************************************************************** -->
+                <!-- End Sales Charts Section -->
+                <!-- *************************************************************** -->
+                <!-- *************************************************************** -->
+                <!-- Start Location and Earnings Charts Section -->
+                <!-- *************************************************************** -->
+                <div class="row">
+                    <div class="col-md-6 col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <h4 class="card-title mb-0">Earning Statistics</h4>
+                                    <div class="ml-auto">
+                                        <div class="dropdown sub-dropdown">
+                                            <button class="btn btn-link text-muted dropdown-toggle" type="button"
+                                                id="dd1" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i data-feather="more-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
+                                                <a class="dropdown-item" href="#">Insert</a>
+                                                <a class="dropdown-item" href="#">Update</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pl-4 mb-5">
+                                    <div class="stats ct-charts position-relative" style="height: 315px;"></div>
+                                </div>
+                                <ul class="list-inline text-center mt-4 mb-0">
+                                    <li class="list-inline-item text-muted font-italic">Earnings for this month</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Recent Activity</h4>
+                                <div class="mt-4 activity">
+                                    <div class="d-flex align-items-start border-left-line pb-3">
+                                        <div>
+                                            <a href="javascript:void(0)" class="btn btn-info btn-circle mb-2 btn-item">
+                                                <i data-feather="shopping-cart"></i>
+                                            </a>
+                                        </div>
+                                        <div class="ml-3 mt-2">
+                                            <h5 class="text-dark font-weight-medium mb-2">New Product Sold!</h5>
+                                            <p class="font-14 mb-2 text-muted">John Musa just purchased <br> Cannon 5M
+                                                Camera.
+                                            </p>
+                                            <span class="font-weight-light font-14 text-muted">10 Minutes Ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start border-left-line pb-3">
+                                        <div>
+                                            <a href="javascript:void(0)"
+                                                class="btn btn-danger btn-circle mb-2 btn-item">
+                                                <i data-feather="message-square"></i>
+                                            </a>
+                                        </div>
+                                        <div class="ml-3 mt-2">
+                                            <h5 class="text-dark font-weight-medium mb-2">New Support Ticket</h5>
+                                            <p class="font-14 mb-2 text-muted">Richardson just create support <br>
+                                                ticket</p>
+                                            <span class="font-weight-light font-14 text-muted">25 Minutes Ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-start border-left-line">
+                                        <div>
+                                            <a href="javascript:void(0)" class="btn btn-cyan btn-circle mb-2 btn-item">
+                                                <i data-feather="bell"></i>
+                                            </a>
+                                        </div>
+                                        <div class="ml-3 mt-2">
+                                            <h5 class="text-dark font-weight-medium mb-2">Notification Pending Order!
+                                            </h5>
+                                            <p class="font-14 mb-2 text-muted">One Pending order from Ryne <br> Doe</p>
+                                            <span class="font-weight-light font-14 mb-1 d-block text-muted">2 Hours
+                                                Ago</span>
+                                            <a href="javascript:void(0)" class="font-14 border-bottom pb-1 border-info">Load More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *************************************************************** -->
+                <!-- End Location and Earnings Charts Section -->
+                <!-- *************************************************************** -->
+                <!-- *************************************************************** -->
+                <!-- Start Top Leader Table -->
+                <!-- *************************************************************** -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-4">
+                                    <h4 class="card-title">Top Leaders</h4>
+                                    <div class="ml-auto">
+                                        <div class="dropdown sub-dropdown">
+                                            <button class="btn btn-link text-muted dropdown-toggle" type="button"
+                                                id="dd1" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i data-feather="more-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
+                                                <a class="dropdown-item" href="#">Insert</a>
+                                                <a class="dropdown-item" href="#">Update</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table no-wrap v-middle mb-0">
+                                        <thead>
+                                            <tr class="border-0">
+                                                <th class="border-0 font-14 font-weight-medium text-muted">Team Lead
+                                                </th>
+                                                <th class="border-0 font-14 font-weight-medium text-muted px-2">Project
+                                                </th>
+                                                <th class="border-0 font-14 font-weight-medium text-muted">Team</th>
+                                                <th class="border-0 font-14 font-weight-medium text-muted text-center">
+                                                    Status
+                                                </th>
+                                                <th class="border-0 font-14 font-weight-medium text-muted text-center">
+                                                    Weeks
+                                                </th>
+                                                <th class="border-0 font-14 font-weight-medium text-muted">Budget</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="border-top-0 px-2 py-4">
+                                                    <div class="d-flex no-block align-items-center">
+                                                        <div class="mr-3"><img
+                                                                src="${pageContext.request.contextPath}/resources/assets/images/users/widget-table-pic1.jpg"
+                                                                alt="user" class="rounded-circle" width="45"
+                                                                height="45" /></div>
+                                                        <div class="">
+                                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Hanna
+                                                                Gover</h5>
+                                                            <span class="text-muted font-14">hgover@gmail.com</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0 text-muted px-2 py-4 font-14">Elite Admin</td>
+                                                <td class="border-top-0 px-2 py-4">
+                                                    <div class="popover-icon">
+                                                        <a class="btn btn-primary rounded-circle btn-circle font-12"
+                                                            href="javascript:void(0)">DS</a>
+                                                        <a class="btn btn-danger rounded-circle btn-circle font-12 popover-item"
+                                                            href="javascript:void(0)">SS</a>
+                                                        <a class="btn btn-cyan rounded-circle btn-circle font-12 popover-item"
+                                                            href="javascript:void(0)">RP</a>
+                                                        <a class="btn btn-success text-white rounded-circle btn-circle font-20"
+                                                            href="javascript:void(0)">+</a>
+                                                    </div>
+                                                </td>
+                                                <td class="border-top-0 text-center px-2 py-4"><i
+                                                        class="fa fa-circle text-primary font-12" data-toggle="tooltip"
+                                                        data-placement="top" title="In Testing"></i></td>
+                                                <td
+                                                    class="border-top-0 text-center font-weight-medium text-muted px-2 py-4">
+                                                    35
+                                                </td>
+                                                <td class="font-weight-medium text-dark border-top-0 px-2 py-4">$96K
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-2 py-4">
+                                                    <div class="d-flex no-block align-items-center">
+                                                        <div class="mr-3"><img
+                                                                src="${pageContext.request.contextPath}/resources/assets/images/users/widget-table-pic2.jpg"
+                                                                alt="user" class="rounded-circle" width="45"
+                                                                height="45" /></div>
+                                                        <div class="">
+                                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Daniel
+                                                                Kristeen
+                                                            </h5>
+                                                            <span class="text-muted font-14">Kristeen@gmail.com</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-muted px-2 py-4 font-14">Real Homes WP Theme</td>
+                                                <td class="px-2 py-4">
+                                                    <div class="popover-icon">
+                                                        <a class="btn btn-primary rounded-circle btn-circle font-12"
+                                                            href="javascript:void(0)">DS</a>
+                                                        <a class="btn btn-danger rounded-circle btn-circle font-12 popover-item"
+                                                            href="javascript:void(0)">SS</a>
+                                                        <a class="btn btn-success text-white rounded-circle btn-circle font-20"
+                                                            href="javascript:void(0)">+</a>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center px-2 py-4"><i
+                                                        class="fa fa-circle text-success font-12" data-toggle="tooltip"
+                                                        data-placement="top" title="Done"></i>
+                                                </td>
+                                                <td class="text-center text-muted font-weight-medium px-2 py-4">32</td>
+                                                <td class="font-weight-medium text-dark px-2 py-4">$85K</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-2 py-4">
+                                                    <div class="d-flex no-block align-items-center">
+                                                        <div class="mr-3"><img
+                                                                src="${pageContext.request.contextPath}/resources/assets/images/users/widget-table-pic3.jpg"
+                                                                alt="user" class="rounded-circle" width="45"
+                                                                height="45" /></div>
+                                                        <div class="">
+                                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Julian
+                                                                Josephs
+                                                            </h5>
+                                                            <span class="text-muted font-14">Josephs@gmail.com</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-muted px-2 py-4 font-14">MedicalPro WP Theme</td>
+                                                <td class="px-2 py-4">
+                                                    <div class="popover-icon">
+                                                        <a class="btn btn-primary rounded-circle btn-circle font-12"
+                                                            href="javascript:void(0)">DS</a>
+                                                        <a class="btn btn-danger rounded-circle btn-circle font-12 popover-item"
+                                                            href="javascript:void(0)">SS</a>
+                                                        <a class="btn btn-cyan rounded-circle btn-circle font-12 popover-item"
+                                                            href="javascript:void(0)">RP</a>
+                                                        <a class="btn btn-success text-white rounded-circle btn-circle font-20"
+                                                            href="javascript:void(0)">+</a>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center px-2 py-4"><i
+                                                        class="fa fa-circle text-primary font-12" data-toggle="tooltip"
+                                                        data-placement="top" title="Done"></i>
+                                                </td>
+                                                <td class="text-center text-muted font-weight-medium px-2 py-4">29</td>
+                                                <td class="font-weight-medium text-dark px-2 py-4">$81K</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-2 py-4">
+                                                    <div class="d-flex no-block align-items-center">
+                                                        <div class="mr-3"><img
+                                                                src="${pageContext.request.contextPath}/resources/assets/images/users/widget-table-pic4.jpg"
+                                                                alt="user" class="rounded-circle" width="45"
+                                                                height="45" /></div>
+                                                        <div class="">
+                                                            <h5 class="text-dark mb-0 font-16 font-weight-medium">Jan
+                                                                Petrovic
+                                                            </h5>
+                                                            <span class="text-muted font-14">hgover@gmail.com</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-muted px-2 py-4 font-14">Hosting Press HTML</td>
+                                                <td class="px-2 py-4">
+                                                    <div class="popover-icon">
+                                                        <a class="btn btn-primary rounded-circle btn-circle font-12"
+                                                            href="javascript:void(0)">DS</a>
+                                                        <a class="btn btn-success text-white font-20 rounded-circle btn-circle"
+                                                            href="javascript:void(0)">+</a>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center px-2 py-4"><i
+                                                        class="fa fa-circle text-danger font-12" data-toggle="tooltip"
+                                                        data-placement="top" title="In Progress"></i></td>
+                                                <td class="text-center text-muted font-weight-medium px-2 py-4">23</td>
+                                                <td class="font-weight-medium text-dark px-2 py-4">$80K</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *************************************************************** -->
+                <!-- End Top Leader Table -->
+                <!-- *************************************************************** -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center text-muted">
+                All Rights Reserved by Adminmart. Designed and Developed by <a
+                    href="https://wrappixel.com">WrapPixel</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    
+	
+	<!-- 차트 링크 --> 
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+							
+	<!-- 부트스트랩 --> 
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous">	
+	</script> 
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+		crossorigin="anonymous">
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+		crossorigin="anonymous">
+	</script>
+	<script>
+	var payCtx = document.getElementById('payChart'); 
+	var payMonth = ${payChart[0].MONTH};
+	var payChart = new Chart(
+			payCtx, { type: 'bar', data: { labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], 
+		datasets: [{ label: '# 이용 고객', 
+
+			data: [${payChart[0].PAY}, 
+				${payChart[1].PAY}, 
+				${payChart[2].PAY}, 
+				${payChart[3].PAY}, 
+				${payChart[4].PAY}, 
+				${payChart[5].PAY},
+				${payChart[6].PAY},
+				${payChart[7].PAY},
+				${payChart[8].PAY},
+				${payChart[9].PAY},
+				${payChart[10].PAY},
+				${payChart[11].PAY}
+				], 
+			backgroundColor: [ 
+				'rgba(255, 99, 132, 0.2)', 
+				'rgba(54, 162, 235, 0.2)', 
+				'rgba(255, 206, 86, 0.2)', 
+				'rgba(75, 192, 192, 0.2)', 
+				'rgba(153, 102, 255, 0.2)', 
+				'rgba(255, 159, 64, 0.2)',
+				'rgba(255, 99, 132, 0.2)',
+				'rgba(54, 162, 235, 0.2)',
+				'rgba(255, 206, 86, 0.2)',
+				'rgba(75, 192, 192, 0.2)',
+				'rgba(153, 102, 255, 0.2)',
+				'rgba(255, 159, 64, 0.2)'], 
+				/* 색 추가 */
+			borderColor: [ 
+				'rgba(255, 99, 132, 1)', 
+				'rgba(54, 162, 235, 1)', 
+				'rgba(255, 206, 86, 1)', 
+				'rgba(75, 192, 192, 1)', 
+				'rgba(153, 102, 255, 1)', 
+				'rgba(255, 159, 64, 1)',
+				'rgba(255, 99, 132, 1)', 
+				'rgba(54, 162, 235, 1)', 
+				'rgba(255, 206, 86, 1)', 
+				'rgba(75, 192, 192, 1)', 
+				'rgba(153, 102, 255, 1)', 
+				'rgba(255, 159, 64, 1)'], 
+			borderWidth: 1 }] }, 
+			options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } 
+			}); 
+	</script>
+    <!-- 차트 -->
+	<script> 
+		
+	var memberCtx = document.getElementById('memberChart'); 
+	var memberMonth = ${memberChart[0].MONTH};
+	var memberChart = new Chart(
+			memberCtx, { type: 'bar', data: { labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], 
+		datasets: [{ label: '# 이용 고객', 
+
+			data: [${memberChart[0].CNT}, 
+				${memberChart[1].CNT}, 
+				${memberChart[2].CNT}, 
+				${memberChart[3].CNT}, 
+				${memberChart[4].CNT}, 
+				${memberChart[5].CNT},
+				${memberChart[6].CNT},
+				${memberChart[7].CNT},
+				${memberChart[8].CNT},
+				${memberChart[9].CNT},
+				${memberChart[10].CNT},
+				${memberChart[11].CNT}
+				], 
+			backgroundColor: [ 
+				'rgba(255, 99, 132, 0.2)', 
+				'rgba(54, 162, 235, 0.2)', 
+				'rgba(255, 206, 86, 0.2)', 
+				'rgba(75, 192, 192, 0.2)', 
+				'rgba(153, 102, 255, 0.2)', 
+				'rgba(255, 159, 64, 0.2)',
+				'rgba(255, 99, 132, 0.2)',
+				'rgba(54, 162, 235, 0.2)',
+				'rgba(255, 206, 86, 0.2)',
+				'rgba(75, 192, 192, 0.2)',
+				'rgba(153, 102, 255, 0.2)',
+				'rgba(255, 159, 64, 0.2)'], 
+				/* 색 추가 */
+			borderColor: [ 
+				'rgba(255, 99, 132, 1)', 
+				'rgba(54, 162, 235, 1)', 
+				'rgba(255, 206, 86, 1)', 
+				'rgba(75, 192, 192, 1)', 
+				'rgba(153, 102, 255, 1)', 
+				'rgba(255, 159, 64, 1)',
+				'rgba(255, 99, 132, 1)', 
+				'rgba(54, 162, 235, 1)', 
+				'rgba(255, 206, 86, 1)', 
+				'rgba(75, 192, 192, 1)', 
+				'rgba(153, 102, 255, 1)', 
+				'rgba(255, 159, 64, 1)'], 
+			borderWidth: 1 }] }, 
+			options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } 
+			}); 
+	
+	</script> 
+    <script src="${pageContext.request.contextPath}/resources/assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <!-- apps -->
+    <script src="${pageContext.request.contextPath}/resources/dist/js/app-style-switcher.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/dist/js/feather.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <!-- themejs -->
+    <!--Menu sidebar -->
+    <script src="${pageContext.request.contextPath}/resources/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/dist/js/custom.min.js"></script>
+</body>
+
+</html>

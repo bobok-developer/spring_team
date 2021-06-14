@@ -1,0 +1,20 @@
+package xyz.sumtplus.service;
+
+import xyz.sumtplus.domain.RegInfoVO;
+
+/**
+ * 이용 등록 정보 서비스 인터페이스
+ *
+ * @author김보경
+ * @date   2021. 5. 17.
+ */
+public interface RegInfoService {
+	// 이용 등록 정보 등록
+	int RegisterRegInfo(RegInfoVO infoVO);
+	
+	// 결제 전 임시 등록
+	int RegisterTmpReg(RegInfoVO infoVO);
+	
+	// 이용 기간 연장
+	int extendUsingPeriod(RegInfoVO infoVO);
+}

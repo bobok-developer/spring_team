@@ -1,0 +1,28 @@
+package xyz.sumtplus.mapper;
+
+import java.util.List;
+
+import xyz.sumtplus.domain.SeatVO;
+
+/**
+ * 좌석 맵퍼 인터페이스
+ *
+ * @author 김보경
+ * @date   2021. 5. 17.
+ */
+public interface SeatMapper {
+	// 모든 좌석 조회
+	List<SeatVO> getAllList();
+	
+	// 이용 가능한 빈 좌석 목록 조회
+	List<SeatVO> getEmptySeatList();
+	
+	// 좌석 상태 변경
+	void updateStatus(SeatVO seatVO);
+	
+	//좌석 변경 시 새 좌석 상태 변경(이용중)
+	void updateNewSeat(SeatVO seatVO);
+	
+	//좌석 변경 시 기존 좌석 상태 변경(빈좌석)
+	void updateOldSeat(SeatVO seatVO);
+}

@@ -1,0 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="../includes/header_.jsp" />
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background_container prlx_parent">
+			<div class="home_background prlx" style="background-image:url(${pageContext.request.contextPath}/resources/images/news_background.jpg)"></div>
+		</div>
+		<div class="home_content">
+			<h1>사물함 등록/이용</h1>
+		</div>
+	</div>
+
+	<!-- News -->
+
+	<div class="news">
+		<div class="container">
+			
+			<!-- 사물함 -->
+			<div class="d-flex justify-content-center"><h1>사물함</h1></div>
+			<div id="locker" class="border px-5 py-5 mr-3 mt-3">
+				<div class="card-deck">
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함01</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함02</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함03</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함04</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함05</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함06</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함07</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함08</p>
+					  </div>
+					</div>
+				</div>
+				<div class="card-deck mt-4">
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함09</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함10</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함11</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함12</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함13</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함14</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함15</p>
+					  </div>
+					</div>
+					<div class="card bg-muted">
+					  <div class="card-body text-center">
+					    <p class="card-text">사물함16</p>
+					  </div>
+					</div>
+				</div> 
+			</div> <!-- end locker -->
+		</div>
+	</div>
+<jsp:include page="../includes/footer.jsp" />

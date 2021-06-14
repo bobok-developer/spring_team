@@ -1,0 +1,99 @@
+package xyz.sumtplus.service;
+
+import java.io.Console;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.AuthVO;
+import xyz.sumtplus.domain.MemberVO;
+import xyz.sumtplus.mapper.MemberMapper;
+
+
+/**
+ * 맴버서비스아이엠피엘
+ *
+ * @author 류슬희
+ * @date   2021. 5. 19.
+ */
+@Log4j
+@Service
+public class MemberServiceImpl implements MemberService {
+	@Autowired
+	private MemberMapper memberMapper;
+	@Autowired @Qualifier("BCryptPasswordEncoder")
+	private PasswordEncoder encoder;
+	
+	@Transactional
+	@Override
+	public void join(MemberVO memberVo) {
+		AuthVO authVo = new AuthVO();
+		log.info("service register..." + memberVo);
+		String encodePw = encoder.encode(memberVo.getUserPw());
+		memberVo.setUserPw(encodePw);
+		
+		// 회원 정보 입력
+		memberMapper.insert(memberVo);
+		
+		// 회원 번호 조회
+		Long userNo = memberMapper.findUserNoBy(memberVo.getUserId());
+		authVo.setUserNo(userNo);
+		
+		// 회원 권한 입력
+		memberMapper.insertAuth(authVo);
+		
+		// 회원 주소 입력
+		memberVo.getAddress().setUserNo(userNo);
+		memberMapper.insertAddr(memberVo.getAddress());
+	}
+	
+	@Override
+	public int idChk(MemberVO memberVO) {
+	  int result = memberMapper.idChk(memberVO);
+	  return result;
+	}
+	
+	 /*
+	 *  네이버로그인 관련 기능추가
+	 *  2021. 5. 30. 민지현
+	 */
+	@Override
+	public void naverJoin(MemberVO memberVO) {
+		memberMapper.naverInsert(memberVO);
+		Long userNo = memberVO.getUserNo();
+		log.info(userNo);
+		AuthVO authVO = new AuthVO();
+		authVO.setUserNo(userNo);
+		authVO.setAuth("ROLE_MEMBER");
+		memberMapper.insertAuth(authVO);
+	}
+
+	@Override
+	public MemberVO naverLogin(String snsId) {
+		return memberMapper.naverSelect(snsId);
+	}
+
+	@Override
+	public Long findUserNoBy2(String snsId) {
+		return memberMapper.findUserNoBy2(snsId);
+	}
+
+	@Override
+	public String findAuthBy(Long userno) {
+		return memberMapper.findAuthBy(userno);
+	}
+
+	@Override
+	public MemberVO findByUserNo(Long userNo) {
+		return memberMapper.read(userNo);
+	}
+	
+	
+	
+	
+}

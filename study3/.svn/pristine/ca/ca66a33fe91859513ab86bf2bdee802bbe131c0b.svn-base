@@ -1,0 +1,139 @@
+package xyz.sumtplus.service;
+
+import java.io.Console;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.AuthVO;
+import xyz.sumtplus.domain.MemberVO;
+import xyz.sumtplus.mapper.AdminMapper;
+import xyz.sumtplus.mapper.LockerMapper;
+import xyz.sumtplus.mapper.MemberMapper;
+import xyz.sumtplus.mapper.RegInfoMapper;
+import xyz.sumtplus.mapper.SeatMapper;
+
+
+/**
+ * 맴버서비스아이엠피엘
+ *
+ * @author 류슬희
+ * @date   2021. 5. 19.
+ */
+@Log4j
+@Service
+public class MemberServiceImpl implements MemberService {
+	@Autowired
+	private MemberMapper memberMapper;
+	@Autowired
+	private AdminMapper adminMapper;
+	@Autowired
+	private RegInfoMapper reginfoMapper;
+	@Autowired
+	private SeatMapper seatMapper;
+	@Autowired
+	private LockerMapper lockerMapper;
+	@Autowired @Qualifier("BCryptPasswordEncoder")
+	private PasswordEncoder encoder;
+	
+	@Transactional
+	@Override
+	public void join(MemberVO memberVo) {
+		AuthVO authVo = new AuthVO();
+		log.info("service register..." + memberVo);
+		String encodePw = encoder.encode(memberVo.getUserPw());
+		memberVo.setUserPw(encodePw);
+		
+		// 회원 정보 입력
+		memberMapper.insert(memberVo);
+		
+		// 회원 번호 조회
+		Long userNo = memberMapper.findUserNoBy(memberVo.getUserId());
+		authVo.setUserNo(userNo);
+		
+		// 회원 권한 입력
+		memberMapper.insertAuth(authVo);
+		
+		// 회원 주소 입력
+		memberVo.getAddress().setUserNo(userNo);
+		memberMapper.insertAddr(memberVo.getAddress());
+	}
+	
+	@Override
+	public int idChk(MemberVO memberVO) {
+	  int result = memberMapper.idChk(memberVO);
+	  return result;
+	}
+	
+	
+	@Override
+	public int withdraw(Long userNo) {
+		return memberMapper.delete(userNo);
+	}
+
+	/**
+	 * 계정비활성화(탈퇴) 기능 추가
+	 * 2021. 6. 8. 민지현
+	 * 
+	 */
+	@Transactional
+	@Override
+	public int deactivate(Long userNo) {
+		log.warn("등록 취소 될 회원 번호:: " + userNo);
+		/* 등록정보가 있으면 */
+		//if(reginfoMapper.getDetail(userNo) != null) {
+			/* 등록정보 삭제 */
+			adminMapper.deleteRegInfo(userNo);
+			/* 이용 중이던 좌석/사물함 빈 상태로 변경 */
+			seatMapper.delInfoupdateSeat(userNo);
+			lockerMapper.delInfoupdateLocker(userNo);
+
+		//}
+		/* 계정비활성화 */
+		return memberMapper.update(userNo);
+	}
+
+	/*
+	 *  네이버로그인 관련 기능추가
+	 *  2021. 5. 30. 민지현
+	 */
+	@Override
+	public void naverJoin(MemberVO memberVO) {
+		memberMapper.naverInsert(memberVO);
+		Long userNo = memberVO.getUserNo();
+		log.info(userNo);
+		AuthVO authVO = new AuthVO();
+		authVO.setUserNo(userNo);
+		authVO.setAuth("ROLE_MEMBER");
+		memberMapper.insertAuth(authVO);
+	}
+
+	@Override
+	public MemberVO naverLogin(String snsId) {
+		return memberMapper.naverSelect(snsId);
+	}
+
+	@Override
+	public Long findUserNoBy2(String snsId) {
+		return memberMapper.findUserNoBy2(snsId);
+	}
+
+	@Override
+	public String findAuthBy(Long userno) {
+		return memberMapper.findAuthBy(userno);
+	}
+
+	@Override
+	public MemberVO findByUserNo(Long userNo) {
+		return memberMapper.read(userNo);
+	}
+	
+	
+	
+	
+}

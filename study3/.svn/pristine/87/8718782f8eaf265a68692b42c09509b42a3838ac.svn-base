@@ -1,0 +1,13 @@
+package xyz.sumtplus.service;
+
+
+/**
+ * 이용현황 차트
+ *
+ * @author 여름
+ * @date   2021. 5. 26.
+ */
+
+public interface ChartService {
+	
+}

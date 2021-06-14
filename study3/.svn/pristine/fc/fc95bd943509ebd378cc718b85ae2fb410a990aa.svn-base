@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.ChartMapper">
+	
+	<select id="getList">
+		<![CDATA[
+		SELECT * FROM TBL_PAYMENT WHERE PAYNO > 0
+		]]>
+	</select>
+	
+	<select id="count" resultType="Long">
+		<![CDATA[
+			SELECT COUNT(PAYNO) FROM TBL_PAYMENT
+			WHERE TO_CHAR(PAYDATE, 'YYYYMMDD') > '20210430'
+			AND TO_CHAR(PAYDATE, 'YYYYMMDD') < '20210531'
+		]]>
+	</select>
+	
+	<select id="getData" resultType="map">
+
+	 SELECT 
+        TO_CHAR(PAYDATE, 'YYYY/MM') MONTH,
+        COUNT(PAYNO) CNT
+	FROM TBL_PAYMENT
+	WHERE TO_CHAR(PAYDATE, 'YYYY') = #{year}
+	GROUP BY TO_CHAR(PAYDATE, 'YYYY/MM')
+	ORDER BY TO_CHAR(PAYDATE, 'YYYY/MM')
+
+	</select>
+
+</mapper>

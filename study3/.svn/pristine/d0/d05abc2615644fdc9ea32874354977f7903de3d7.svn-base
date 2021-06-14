@@ -1,0 +1,153 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<jsp:include page="../includes/header_.jsp" />
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background_container prlx_parent">
+			<div class="home_background prlx" style="background-image:url(${pageContext.request.contextPath}/resources/images/news_background.jpg)"></div>
+		</div>
+		<div class="home_content">
+			<h1>이용 기간 연장</h1>
+		</div>
+	</div>
+
+	<!-- News -->
+
+	<div class="news">
+		<div class="container">
+			<div class="row">
+			<div class="col-lg-6 d-none d-lg-block">
+				<img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/logo_transparent.png" alt="logo" width="600px">
+			</div>
+            <div class="col-lg-6 mt-5">
+                <div class="p-5 mt-5">
+                    <div class="">
+	                    <sec:authorize access="isAuthenticated()">
+		            	<sec:authentication property="principal" var="member"/>
+							<div class="mb-3">
+								<h3 class="text-muted">이용 중인 좌석 번호: ${regInfoVO.seatNo}</h3>
+								<h3 class="text-muted">이용 중인 사물함 번호: ${regInfoVO.lockerNo}</h3>
+								<h3 class="text-muted">나의 만료일: ${endDate}</h3>
+							</div>
+			        	</sec:authorize>
+                    </div>
+                    <form method="post" class="ex-form mt-3" action="exPayComplete">
+						<span class="text-danger">이용중인 사물함이 있을 시 사물함도 같이 연장됩니다.</span>
+						<select name="fno" class="period form-control mt-3">
+							<option value=""> 기간을 선택하세요 </option>
+							<option value="1">1일 (8,000)</option>
+							<option value="2">7일 (50,000)</option>
+							<option value="3">14일 (90,000)</option>
+							<option value="4">30일 (200,000)</option>
+						</select>
+					        	<input type="hidden" name="seatNo" value="${regInfoVO.seatNo}">
+					        	<input type="hidden" name="lockerNo" value="${regInfoVO.lockerNo}">
+					        	<c:if test="${regInfoVO.lockerNo !=''}"> <!-- 기존에 사물함도 이용하는 유저일 때 -->
+					        		<input class="chkLoc" type="checkbox" value="usingLoc" checked onclick="return false;"> <!-- script에서 fno2 처리 -->
+					        	</c:if>
+				        <input type="hidden" name="userNo" value="${member.vo.userNo}">
+				        <input type="hidden" name="userName" value="${member.vo.userName}">
+	                    <button type="button" class="btn btn-outline-warning btn-block mt-4 extBtn">결제하기</button>
+	                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                    </form>
+                    <hr>
+                </div>
+            </div>           
+			</div>
+		</div>
+	</div>
+	<script src="${pageContext.request.contextPath}/resources/js/payment.js"></script>
+	<script>
+	var cp = '${pageContext.request.contextPath}';
+
+	$(function(){
+		
+		var buyerName = '${member.vo.userName}'; //구매자
+		
+		console.log(buyerName);
+		$(".extBtn").hide(); // 결제버튼 숨김
+		$(".chkLoc").hide();
+		$(".period").on("change", function(){ //셀렉트태그 변경시
+			$(".period option[value='']").remove(); // 기본값제거
+			$(".extBtn").show(); // 결제버튼 보여줌
+			var fno = $(".period option:selected").val(); // fno에 셀렉트 값부여
+			fname = $(".period option:selected").text(); // fname에 셀렉트 이름부여
+			console.log(fno); 
+			console.log(fname);
+			paymentService.feeFindBy({fno:fno, cp:cp}, function(result){ //fno로 해당하는 feeVO 찾는 함수
+				console.log(result);
+				amount = result.price; // amount에 feeVO의가격부여
+				period = result.period; // period에 feeVO의가격부여
+				console.log(amount);
+				console.log(period);
+			});
+			//console.log($(".chkLoc").prop('checked'));
+			
+			if($(".chkLoc").prop('checked') && fno != 1) { //check박스가 true이고 fno가 1일아닐때
+				// 기간이 같은 사물함요금제에 해당하는 fno2를 부여
+				if (fno == 2) {
+					fno2 = 5;
+				} else if(fno == 3) {
+					fno2 = 6;
+				} else if(fno == 4) {
+					fno2 = 7;
+				}
+			
+				paymentService.feeFindBy({fno:fno2 , cp:cp}, function(result){ //fno2로 해당하는 feeVO 찾는 함수
+					console.log(result);
+					amount += result.price; // amount에 feeVO의가격추가
+					fname += result.name; // period에 feeVO의가격추가
+					console.log("after..." + amount);
+					console.log("atter..." + period);
+				});
+			}
+				
+		})
+		
+		$(".extBtn").click(function(){
+			var IMP = window.IMP; // 생략가능
+			IMP.init('imp66686777'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+				
+			IMP.request_pay({
+			    pg : 'inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name :  fname ,
+			    amount : amount ,
+			    //buyer_email : 'iamport@siot.do',
+			    buyer_name : buyerName ,
+			    //buyer_tel : '010-1234-5678',
+			    //buyer_addr : '서울특별시 강남구 삼성동',
+			    //buyer_postcode : '123-456',
+			    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			        var msg = '결제가 완료되었습니다.';
+			        msg += '고유ID : ' + rsp.imp_uid;
+			        msg += '상점 거래ID : ' + rsp.merchant_uid;
+			        msg += '결제 금액 : ' + rsp.paid_amount;
+			        msg += '카드 승인번호 : ' + rsp.apply_num;
+			        
+			        
+			        
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			        
+			        var str = '<input type="hidden" name="period" value="'+ period +'">';
+			        str += '<input type="hidden" name="payment" value="'+ amount +'">';
+			        str += '<input type="hidden" name="itemName" value="'+ fname +'">';
+			        console.log(str);
+			        $(".ex-form").append(str).submit();
+
+			    }
+			    alert(msg);
+			});
+		});
+	}) 
+		
+	 
+</script>
+<jsp:include page="../includes/footer.jsp" />

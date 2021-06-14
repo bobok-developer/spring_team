@@ -1,0 +1,73 @@
+package xyz.sumtplus.mapper;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.MemberVO;
+import xyz.sumtplus.domain.RegInfoVO;
+
+
+
+/**
+ * 관리자 매퍼의 테스트 코드입니다
+ *
+ * @author 박재우
+ * @Date   2021. 5. 18.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@Log4j
+public class AdminMapperTests {
+	@Autowired
+	private AdminMapper mapper;
+	
+	@Test
+	public void getMemberList(){
+		mapper.memberList().forEach(log::info);
+	}
+	
+	@Test
+	public void getRegProperties(){
+		mapper.regProperties().forEach(log::info);
+	}
+	
+	@Test
+	public void getPaymentList(){
+		mapper.paymentList().forEach(log::info);
+	}
+	
+	@Test
+	public void getMemberDetail(){
+		System.out.println(mapper.memberDetail(3));
+	}
+	
+	@Test
+	public void updateMemberInfo(){
+		MemberVO memberVO = new MemberVO();
+		memberVO.setTel("123-456-0987");
+		memberVO.setEmail("ganada@hangual.com");
+		memberVO.setAddress("서북구 성정동");
+		memberVO.setUserNo(16L);
+		mapper.updateMember(memberVO);
+		log.info(memberVO);
+	}
+	
+	@Test
+	public void updateRegPP(){
+		RegInfoVO regInfoVO = new RegInfoVO();
+		regInfoVO.setLockerNo(0);
+		regInfoVO.setSeatNo(0);
+		regInfoVO.setUserNo(10L);
+		mapper.updateRegPP(regInfoVO);
+		log.info(regInfoVO);
+	}
+	
+	@Test
+	public void getItemStatus(){
+		mapper.itemStatus().forEach(log::info);
+	}
+}

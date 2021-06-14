@@ -1,0 +1,38 @@
+package xyz.sumtplus.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.FeeVO;
+import xyz.sumtplus.domain.PaymentVO;
+import xyz.sumtplus.mapper.PaymentMapper;
+
+
+/**
+ * 클래스/인터페이스 설명
+ * 결제서비스 구현
+ *
+ * @author 민지현
+ * @date 2021. 5. 18.
+ */
+@Service
+@Log4j
+public class PaymentServiceImpl implements PaymentService{
+	@Autowired
+	private PaymentMapper paymentMapper;
+	
+	@Override
+	public int pay(PaymentVO paymentVO) {
+		log.info("pay..." + paymentVO);
+		return paymentMapper.insert(paymentVO);
+	}
+
+	@Override
+	public FeeVO findBy(Integer fno) {
+		log.info("findBy..."+fno);
+		return paymentMapper.selectFee(fno);
+	}
+
+	
+}

@@ -1,0 +1,111 @@
+package xyz.sumtplus.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.Criteria;
+import xyz.sumtplus.domain.FeeVO;
+import xyz.sumtplus.domain.MemberVO;
+import xyz.sumtplus.domain.RegInfoVO;
+import xyz.sumtplus.mapper.AdminMapper;
+
+
+/**
+ * 관리자의 서비스Impl입니다
+ *
+ * @author 박재우
+ * @Date   2021. 5. 18.
+ */
+@Service
+@Log4j
+@AllArgsConstructor
+public class AdminServiceImpl implements AdminService{
+	@Autowired
+	private AdminMapper mapper;
+	
+	public List<RegInfoVO> itemStatus() {
+		// TODO Auto-generated method stub
+		log.info("itemStatus()...");
+		
+		return mapper.itemStatus();
+	}
+
+	@Override
+	public List<MemberVO> memberList(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.info("memberList()...");
+		
+		return mapper.memberList(cri);
+	}
+
+	@Override
+	public List<FeeVO> paymentList(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.info("paymentList()...");
+		
+		return mapper.paymentList(cri);
+	}
+
+	@Override
+	public List<RegInfoVO> regProperties(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.info("regProperties()...");
+		
+		return mapper.regProperties(cri);
+	}
+
+	@Override
+	public MemberVO memberDetail(int userNo) {
+		// TODO Auto-generated method stub
+		log.info("memberDetail()...");
+		
+		return mapper.memberDetail(userNo);
+	}
+
+	@Override
+	public void updateMember(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		log.info("updateMember()...");
+		mapper.updateMember(memberVO);
+	}
+
+	@Override
+	public void updateRegPP(RegInfoVO regInfoVO) {
+		// TODO Auto-generated method stub
+		log.info("updateRegPP()....");
+		mapper.updateRegPP(regInfoVO);
+	}
+
+	@Override
+	public RegInfoVO regDetail(int regNo) {
+		// TODO Auto-generated method stub
+		log.info("register detail...");
+		return mapper.regDetail(regNo);
+	}
+
+	@Override
+	public int getMemberTotal(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.info("get total count...");
+		return mapper.getMemberTotalCount(cri);
+	}
+
+	@Override
+	public int getRegTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.info("get total count...");
+		return mapper.getRegTotalCount(cri);
+	}
+
+	@Override
+	public int getPaymentTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		log.info("get total count...");
+		return mapper.getPaymentTotalCount(cri);
+	}
+	
+}

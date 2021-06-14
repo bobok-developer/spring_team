@@ -1,0 +1,78 @@
+package xyz.sumtplus.mapper;
+
+import org.junit.Test;
+
+
+
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import xyz.sumtplus.domain.BoardVO;
+
+import lombok.extern.log4j.Log4j;
+
+/**
+ * 게시글 단위 테스트
+ *
+ * @author 여름
+ * @date   2021. 5. 18.
+ */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@Log4j
+public class BoardMapperTests {
+	@Autowired
+	private BoardMapper mapper;
+	
+	@Test // 조회 테스트 동작확인
+	public void testGetPage() {
+		BoardVO boardVO = new BoardVO();
+		mapper.getList().forEach(log::info);
+	}
+	
+	@Test // 조회 테스트2 안되는중
+	public void getListWithPaging() {
+		BoardVO boardVO = new BoardVO();
+		mapper.getList().forEach(log::info);
+	}
+		
+	
+	@Test // 입력 테스트
+	public void testInsert() {
+		BoardVO boardVO = new BoardVO();
+		boardVO.setTitle("카테고리 1 / 비밀글 true 테스트");
+		boardVO.setWriter("tester");
+		boardVO.setContent("단위 테스트 작성 내용~~~~~~");
+		boardVO.setCategory(1);
+		boardVO.setSecret(true); //
+		
+		mapper.insert(boardVO);
+		log.info(boardVO);
+	} 
+		
+
+	@Test // 수정 테스트
+	public void testUpdate() {
+		BoardVO boardVO = new BoardVO();
+		boardVO.setTitle("수정된 단위 테스트 작성 제목");
+		boardVO.setWriter("newbie");
+		boardVO.setContent("수정된 단위 테스트 작성 내용");
+		boardVO.setBno(5L);
+		
+		log.info(mapper.update(boardVO));
+	} //수정됨. 업로드날짜 변경됨.
+	
+	@Test // 삭제 테스트
+	public void testDelete() {
+		log.info(mapper.delete(6L));
+	}	
+
+	@Test // 상세
+	public void testRead() {
+		log.info(mapper.read(9L));
+	}
+	
+}

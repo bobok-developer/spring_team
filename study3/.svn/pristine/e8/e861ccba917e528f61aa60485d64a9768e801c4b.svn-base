@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.RegInfoMapper">
+
+<!-- 등록 이용 정보 등록 -->
+<insert id="insertRegInfo">
+	<selectKey keyProperty="regNo" order="BEFORE" resultType="long">
+		SELECT SEQ_REGINFO.NEXTVAL FROM DUAL
+	</selectKey>
+	<if test="lockerNo == 0"> <!-- 사물함 미등록 시(좌석만 등록 시) -->
+    	INSERT INTO TBL_REGINFO (REG_NO, USER_NO, USER_NAME, FNO, SEAT_NO, FEE_NAME, ENDDATE) <!-- jsp에서 받은 값 -->
+    	VALUES (#{regNo}, #{userNo}, #{userName}, #{fno}, #{seatNo}, #{feeName}, SYSDATE + #{period})
+    </if>
+     <if test="lockerNo != 0">
+		INSERT INTO TBL_REGINFO (REG_NO, USER_NO, USER_NAME, FNO, SEAT_NO, LOCKER_NO, FEE_NAME, ENDDATE)
+		VALUES (#{regNo}, #{userNo}, #{userName}, #{fno}, #{seatNo}, #{lockerNo}, #{feeName}, SYSDATE + #{period})
+	</if>
+</insert>		
+	
+</mapper>

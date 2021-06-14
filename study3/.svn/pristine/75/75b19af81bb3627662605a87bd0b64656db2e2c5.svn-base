@@ -1,0 +1,110 @@
+/*package xyz.sumtplus.task;
+
+import java.util.List;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.LockerVO;
+import xyz.sumtplus.domain.RegInfoVO;
+import xyz.sumtplus.domain.SeatVO;
+import xyz.sumtplus.mapper.LockerMapper;
+import xyz.sumtplus.mapper.RegInfoMapper;
+import xyz.sumtplus.mapper.SeatMapper;
+
+@Log4j
+@Component
+@AllArgsConstructor
+public class TmpRegCheckTask {
+	
+	private RegInfoMapper regInfoMapper;
+	private SeatMapper seatMapper;
+	private LockerMapper lockerMapper;
+
+	@Transactional
+//	@Scheduled(cron="0 0/10 * * * *")
+//	@Scheduled(cron="0 * * * * *")
+	public void checkPeriod() throws Exception {
+		
+		log.warn("임시 등록 task 실행...");
+		log.warn("========================================");
+		List<RegInfoVO> tmpRegList = regInfoMapper.getTmpList();
+		List<RegInfoVO> regInfoList = regInfoMapper.getAllList();
+		//if(tmpRegList.size() == 0) return;
+
+//		for(RegInfoVO regList : regInfoList) {
+//			boolean isEquals = false;
+//			for(RegInfoVO tmpList : tmpRegList) {
+//				if(regList.equals(tmpList)) isEquals = true;
+//			}
+//			if(isEquals) log.warn(regList);
+//			else log.warn(regList);
+//		}
+//		if(tmpRegList.retainAll(regInfoList)) { // 교집합x : 가등록만 하고 결제완료하지 않으면
+//			for(RegInfoVO regVO : regInfoList) {
+//				for(RegInfoVO tmpRegVO : tmpRegList) {
+//					log.warn("등록되어 있는 좌석no들:: " + regVO.getSeatNo());
+//					log.warn("임시 좌석no:: " + tmpRegVO.getSeatNo());
+//					
+//						SeatVO seatVO = new SeatVO();
+//						seatVO.setSno(tmpRegVO.getSeatNo()); // 임시 등록 좌석 번호
+//						seatVO.setStatus(false);
+//						seatVO.setUserNo(0L);
+//						seatMapper.updateStatus(seatVO);
+//					
+//					if(tmpRegVO.getLockerNo() != null) {
+//						if (regInfoList.contains(tmpRegVO.getLockerNo())) {
+//							return;
+//						} else {
+//							LockerVO lockerVO = new LockerVO();
+//							lockerVO.setLno(tmpRegVO.getLockerNo());
+//							lockerVO.setStatus(false);
+//							lockerVO.setUserNo(0L);
+//							lockerMapper.updateStatus(lockerVO);
+//							log.warn(lockerVO);
+//						}
+//					}
+//				}
+//			}
+//		}
+		
+//		if (regInfoList.contains(((RegInfoVO) tmpRegList).getSeatNo())) {
+//			log.warn("리턴됨");
+//			return;
+//		}
+
+		for(RegInfoVO regVO : regInfoList) {
+			for(RegInfoVO tmpRegVO : tmpRegList) {
+				log.warn("등록 좌석no들:: " + regVO.getSeatNo());
+				log.warn("임시 좌석no:: " + tmpRegVO.getSeatNo());
+				
+					SeatVO seatVO = new SeatVO();
+					seatVO.setSno(tmpRegVO.getSeatNo()); // 임시 등록 좌석 번호
+					seatVO.setStatus(false);
+					seatVO.setUserNo(0L);
+					seatMapper.updateStatus(seatVO);
+				
+				if(tmpRegVO.getLockerNo() != null) {
+					if (regInfoList.contains(tmpRegVO.getLockerNo())) {
+						return;
+					} else {
+						LockerVO lockerVO = new LockerVO();
+						lockerVO.setLno(tmpRegVO.getLockerNo());
+						lockerVO.setStatus(false);
+						lockerVO.setUserNo(0L);
+						lockerMapper.updateStatus(lockerVO);
+						log.warn(lockerVO);
+					}
+				}
+			}
+		}
+//		tmpRegList.forEach(log::info);
+//		log.warn("========================================");
+//		log.warn(regInfoMapper.deleteTmpReg());
+		
+		}
+}
+*/

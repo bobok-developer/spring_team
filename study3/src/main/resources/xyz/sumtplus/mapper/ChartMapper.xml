@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.ChartMapper">
+	
+	<select id="getChart" resultType="map">
+		<![CDATA[
+		SELECT * FROM TBL_PAYMENT WHERE PAYNO > 0
+		]]>
+	</select>
+	
+	<!-- 연간 월별 이용자 쿼리 (데이터가 없는 달은 0으로 표기) -->
+	<select id="getCount" resultType="map">
+		SELECT TO_NUMBER(MONTH) || '월' MONTH, CNT FROM (
+		SELECT MONTH, NVL(B.CNT, 0) CNT FROM(
+		    SELECT
+		        DECODE(LENGTH(ROWNUM),
+		        1,'0'||TO_CHAR(ROWNUM), TO_CHAR(ROWNUM)) MONTH,
+		        0 CNT
+		        FROM DICT
+		        WHERE ROWNUM &lt; 13
+		) A
+		LEFT OUTER JOIN (
+		        SELECT 
+		           TO_CHAR(PAYDATE, 'MM') AS MONTH,
+		           COUNT(*) AS CNT
+		        FROM TBL_PAYMENT
+		        <if test="year != null and year != ''">
+		        WHERE TO_CHAR(PAYDATE, 'YYYY') = #{year}
+		        </if>
+		        GROUP BY TO_CHAR(PAYDATE, 'MM')
+		) B USING(MONTH)
+		ORDER BY 1
+		)
+		
+		<!-- 0은 출력하지 않는 쿼리 -->
+		<!-- SELECT 
+		       TO_CHAR(PAYDATE, 'YYYY/MM') MONTH,
+		       COUNT(PAYNO) CNT
+			FROM TBL_PAYMENT
+			WHERE TO_CHAR(PAYDATE, 'YYYY') = #{year}
+			GROUP BY TO_CHAR(PAYDATE, 'YYYY/MM')
+			ORDER BY TO_CHAR(PAYDATE, 'YYYY/MM') -->
+	
+	</select>
+	
+	<select id="getCountYearCount" resultType="map">
+		SELECT 
+		   TO_CHAR(PAYDATE, 'YYYY') AS YEAR,
+		   COUNT(*) AS CNT
+		FROM TBL_PAYMENT
+		GROUP BY TO_CHAR(PAYDATE, 'YYYY')
+		ORDER BY 1
+	</select>
+
+		<!-- 연간 월별 매출 쿼리 (데이터가 없는 달은 0으로 표기) -->
+	<select id="getMonthPay" resultType="map">
+		SELECT MONTH, NVL(B.PAY, 0) PAY FROM(
+			    SELECT
+				        DECODE(LENGTH(ROWNUM),
+				        1,'0'||TO_CHAR(ROWNUM), TO_CHAR(ROWNUM)) MONTH,
+				        0 PAY
+				        FROM DICT
+				        WHERE ROWNUM &lt; 13
+			) A
+			LEFT OUTER JOIN (
+		                SELECT
+		                TO_CHAR(PAYDATE, 'MM') AS MONTH,
+		                    SUM(PAYMENT) AS PAY
+		                FROM TBL_PAYMENT
+		            	<if test="year != null and year != ''">
+		       			WHERE TO_CHAR(PAYDATE, 'YYYY') = #{year}
+		        		</if>
+		                GROUP BY TO_CHAR(PAYDATE, 'MM')    
+			) B USING(MONTH)
+		ORDER BY 1
+	</select>
+	
+	<!-- 한 달 일별 매출 쿼리 (데이터가 없는 달은 0으로 표기) -->
+	<select id="getDayPay" resultType="map">
+			SELECT DAY, NVL(PAY, 0) PAY FROM (
+			    SELECT ROWNUM DAY
+			    FROM ALL_OBJECTS 
+			    WHERE ROWNUM &lt;= (
+			        SELECT TO_CHAR(LAST_DAY(TO_DATE(#{yearMonth},'YYYY-MM')), 'DD') TM 
+			        FROM DUAL
+			    )
+			) A
+			LEFT OUTER JOIN (
+			    SELECT
+			    TO_CHAR(PAYDATE, 'DD') AS DAY,
+			        SUM(PAYMENT) AS PAY
+			    FROM TBL_PAYMENT
+			    
+			    WHERE TO_CHAR(PAYDATE, 'YYYY-MM') = #{yearMonth}
+			    
+			    GROUP BY TO_CHAR(PAYDATE, 'DD')    
+			) B USING(DAY)
+			ORDER BY 1
+			
+	</select>
+
+</mapper>

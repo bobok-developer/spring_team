@@ -1,0 +1,28 @@
+/*
+ * regInfo module 이용 등록 정보 
+ */
+console.log("regInfo module실행");
+var regInfoService = (function() {
+	return {
+		add: function(regInfo, callback, error) {
+			console.log("regInfo.add()..");
+			
+			$.ajax({
+				type: "post",
+				url: "/item/seat",
+				data: JSON.stringify(regInfo),
+				contentType: "application/json; charset=utf-8",
+				success : function(result, status, xhr) {
+					if(callback) {
+						callback(result);
+					}
+				},
+				error : function(xht, status, er) {
+					if(error) {
+						error(er);
+					}
+				}
+			});
+		}
+	};
+})

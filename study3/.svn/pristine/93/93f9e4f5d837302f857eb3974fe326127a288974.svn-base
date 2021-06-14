@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.sumtplus.mapper.RegInfoMapper">
+
+<!-- 이용 등록 정보 등록 -->
+<insert id="insertRegInfo">
+	<selectKey keyProperty="regNo" order="BEFORE" resultType="long">
+		SELECT SEQ_REGINFO.NEXTVAL FROM DUAL
+	</selectKey>
+	<if test="lockerNo == null"> <!-- 사물함 미등록 시(좌석만 등록 시) -->
+    	INSERT INTO TBL_REGINFO (REGNO, USERNO, USERNAME, FNO, SEATNO, FEENAME, ENDDATE) <!-- jsp에서 받은 값 -->
+    	VALUES (#{regNo}, #{userNo}, #{userName}, #{fno}, #{seatNo}, #{feeName}, SYSDATE + #{period})
+    </if>
+     <if test="lockerNo != null">
+		INSERT INTO TBL_REGINFO (REGNO, USERNO, USERNAME, FNO, SEATNO, LOCKERNO, FEENAME, ENDDATE)
+		VALUES (#{regNo}, #{userNo}, #{userName}, #{fno2}, #{seatNo}, #{lockerNo}, #{feeName}, SYSDATE + #{period})
+	</if>
+</insert>		
+
+<!-- 만료된 이용 등록 정보 조회 -->	
+<select id="getExpireInfo" resultType="xyz.sumtplus.domain.RegInfoVO">
+	SELECT * FROM TBL_REGINFO
+	<![CDATA[WHERE ENDDATE < TO_DATE(SYSDATE-1, 'YY/MM/DD')]]>
+</select>
+
+<!-- 만료일 지난 정보 삭제 -->
+<delete id="deleteRegInfo">
+	DELETE TBL_REGINFO
+	WHERE REGNO IN
+		(SELECT REGNO
+		FROM
+			(SELECT * FROM TBL_REGINFO
+			<![CDATA[WHERE ENDDATE < TO_DATE(SYSDATE-1, 'YY/MM/DD')))]]>
+</delete>
+</mapper>

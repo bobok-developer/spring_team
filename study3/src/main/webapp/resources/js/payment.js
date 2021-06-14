@@ -1,0 +1,50 @@
+/**
+ *  reply module
+ */
+console.log("payment module...");
+
+var paymentService = (function() {
+	return {
+		feeFindBy: function(param, callback, error) {
+			console.log("payment.feeFindBy()........");
+			var url = "https://zaksal.levinni.site/payment/getFee?fno=" + param.fno;
+			console.log(url);
+			//ajax호출
+			$.getJSON(url, function(result) { //success
+				if(callback) {
+					callback(result);
+				}
+			}).fail(function(xhr, status, er) { // error
+				if(error) {
+					error(er);
+				}
+			});
+			/*$.ajax({
+				type : "get",
+				url : url,
+				dataType: "xml",
+				success : function(result, status, xhr) {
+					if(callback) {
+						callback(result);
+					}
+				},
+				error : function(xhr, status, er) {
+					if(error) {
+						error(er);
+					}
+				}
+			});*/
+		},
+		
+	};
+})();
+
+
+
+
+
+
+
+
+
+

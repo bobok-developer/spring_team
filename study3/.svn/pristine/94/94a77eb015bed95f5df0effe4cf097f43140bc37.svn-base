@@ -1,0 +1,5 @@
+@charset "utf-8";
+
+.page-link {background-color: white; color: #ffc107; border: 1px solid #f5d269;}
+.page-link:hover {color: white; background-color:#ffc107; }
+.page-item.active .page-link {background-color: #ffc107; border-color: #ffc107;}

@@ -1,0 +1,28 @@
+package xyz.sumtplus.service;
+
+import xyz.sumtplus.domain.MemberVO;
+
+/**
+ * 회원가입 멤버서비스 인터페이스
+ *
+ * @author 류슬희
+ * @date   2021. 5. 19.
+ */
+public interface MemberService {
+	
+	//회원가입
+	 void join(MemberVO memberVO);
+	 
+	 //아이디 중복체크
+	 public int idChk(MemberVO memberVO);
+	 
+	 /*
+	 *  네이버로그인 관련 기능추가
+	 *  2021. 5. 30. 민지현
+	 */
+	 //네이버회원가입
+	 void naverJoin(MemberVO memberVO);
+	 
+	 //네이버로그인
+	 MemberVO naverLogin(String snsId);
+}

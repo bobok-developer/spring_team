@@ -1,0 +1,83 @@
+package xyz.sumtplus.mapper;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.RegInfoVO;
+
+
+/**
+ * 이용 등록 정보 매퍼 테스트 클래스
+ *
+ * @author 김보경
+ * @date   2021. 5. 17.
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+"file:src/main/webapp/WEB-INF/spring/security-context.xml"})
+@Log4j
+public class RegInfoMapperTests {
+	@Autowired
+	private RegInfoMapper mapper;
+	
+	@Test
+	public void insertRegInfoTest() {
+		RegInfoVO infoVO = new RegInfoVO();
+		infoVO.setUserNo(51L);
+		infoVO.setUserName("민지현");
+		infoVO.setFno(1);
+		infoVO.setSeatNo(11);
+		//infoVO.setLockerNo(3);
+		infoVO.setFeeName("1일 요금제");
+		infoVO.setPeriod(1);
+		log.info(infoVO);
+		mapper.insertRegInfo(infoVO);
+	}
+	
+	@Test
+	public void insertTmpRegTest() {
+		RegInfoVO infoVO = new RegInfoVO();
+		infoVO.setUserNo(156L);
+		infoVO.setUserName("김보경");
+		infoVO.setFno(1);
+		infoVO.setSeatNo(5);
+		//infoVO.setLockerNo(3);
+		infoVO.setFeeName("1일 요금제");
+		infoVO.setPeriod(1);
+		log.info(infoVO);
+		mapper.insertTmpReg(infoVO);
+	}
+	
+	@Test
+	public void getTmpListTest() {
+		mapper.getTmpList().forEach(log::info);
+	}
+	
+	@Test
+	public void getExpireInfoTest() {
+		mapper.getExpireInfo().forEach(log::info);;
+	}
+	
+	@Test
+	public void deleteRegInfoTest() {
+		mapper.deleteRegInfo();
+	}
+	
+	@Test
+	public void deleteTmpRegTest() {
+		mapper.deleteTmpReg();
+	}
+	
+	@Test
+	public void updatePeriodTest() {
+		RegInfoVO infoVO = new RegInfoVO();
+		infoVO.setPeriod(14);
+		infoVO.setUserNo(156L);
+		mapper.updatePeriod(infoVO);
+	}
+
+}

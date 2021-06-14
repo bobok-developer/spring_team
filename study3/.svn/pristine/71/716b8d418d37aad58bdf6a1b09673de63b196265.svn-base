@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="../includes/header_.jsp" />
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background_container prlx_parent">
+			<div class="home_background prlx" style="background-image:url(${pageContext.request.contextPath}/resources/images/news_background.jpg)"></div>
+		</div>
+		<div class="home_content">
+			<h1>결과 페이지</h1>
+		</div>
+	</div>
+
+	<!-- News -->
+
+	<div class="news">
+		<div class="container">
+			<div class="row">
+				<p>좌석/사물함 연장이 완료되었습니다.</p>
+				<p>${paymentVO}<p><br>
+				<p>${regInfoVO}<p>
+				<table class="table">
+					<tr>
+						<td>등록번호 : </td>
+						<td>${regNo}</td>
+					</tr>
+					<tr>
+						<td>상품이름 : </td>
+						<td>${paymentVO.itemName}<td>
+					</tr>
+					<tr>
+					</tr>
+						<td>결제금액 : </td>
+						<td>${paymentVO.payment}</td>
+					<tr>
+					</tr>
+						<td>좌석번호 : </td>
+						<td>${regInfoVO.seatNo}</td>
+					<tr>
+						<td>추가기간 : </td>
+						<td>${regInfoVO.period}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	 
+</script>
+<jsp:include page="../includes/footer.jsp" />

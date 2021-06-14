@@ -1,0 +1,7 @@
+package xyz.sumtplus.service;
+
+import xyz.sumtplus.domain.MemberVO;
+
+public interface MemberService {
+	 void join(MemberVO memberVO);
+}

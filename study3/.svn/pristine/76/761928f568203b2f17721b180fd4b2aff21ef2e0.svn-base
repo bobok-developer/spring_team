@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="./includes/header_.jsp" />
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background_container prlx_parent">
+			<div class="home_background prlx" style="background-image:url(${pageContext.request.contextPath}/resources/images/news_background.jpg)"></div>
+		</div>
+		<div class="home_content">
+			<h1>ZAKSAL 소개</h1>
+		</div>
+	</div>
+
+	<!-- News -->
+
+	<div class="news">
+		<div class="container">
+			<div class="row"> <!-- 본문 시작 -->
+				
+				<div class="mt-1">
+					<h2>작살 독서실</h2>
+				<span class="text-danger">회원제로 운영되는 프리미엄 학습공간, 작살 독서실입니다.</span>
+				</div>
+				
+				<!-- 타이틀 이미지 -->				
+				
+				<div class="mt-5">
+					<h2>이용 시간</h2>
+					<h3>작살 독서실은 연중 무휴로 운영됩니다.</h3>
+					<h3>월 ~ 금 : 오전 7시 ~ 오후 12시 </h3>
+					<h3>토, 일, 공휴일 : 오전 9시 ~ 오후 11시 </h3>
+					
+				</div>
+				
+				
+				<div class="mt-5">
+					<h2>문의</h2>
+					<h3>이용 문의 전화는 (041) xxx - xxxx 로 부탁드립니다.</h3>
+					<h3>상담 가능 시간 : 월 ~ 금 오전 10시부터 12시, 1시부터 6시.</h3>
+
+				</div>
+				
+				<!-- 상담 가능 시간 이미지 -->
+				
+		</div>
+	</div>
+<jsp:include page="./includes/footer.jsp" />

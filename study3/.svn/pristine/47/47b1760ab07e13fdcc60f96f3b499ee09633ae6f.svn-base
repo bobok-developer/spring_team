@@ -1,0 +1,24 @@
+package xyz.sumtplus.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+
+
+/**
+ * 이용현황 mapper
+ *
+ * @author 여름
+ * @date   2021. 5. 26.
+ */
+
+public interface ChartMapper {
+
+	/*public List<ChartVO> count();*/
+	
+	// 차트 조회
+	List<Map<String, Object>> getChart();
+	
+	// 월별 이용자수 조회
+	List<Map<String, Object>> getMonthChart(long year);
+}

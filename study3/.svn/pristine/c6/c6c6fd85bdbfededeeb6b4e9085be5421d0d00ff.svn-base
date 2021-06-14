@@ -1,0 +1,34 @@
+package xyz.sumtplus.service;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.extern.log4j.Log4j;
+import xyz.sumtplus.domain.PaymentVO;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
+					"file:src/main/webapp/WEB-INF/spring/security-context.xml"})
+@Log4j
+public class PaymentServiceTests {
+	@Autowired
+	private PaymentService paymentService;
+	
+	@Test
+	public void testPay() {
+		PaymentVO paymentVO = new PaymentVO();
+		paymentVO.setUserNo(4L);
+		paymentVO.setRegNo(9L);
+		paymentVO.setPayment(8000L);
+		log.info(paymentService.pay(paymentVO));
+	}
+	
+	@Test
+	public void testFindBy() {
+		log.info(paymentService.findBy(2));
+	}
+	
+}
