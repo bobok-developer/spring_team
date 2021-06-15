@@ -3,5 +3,7 @@
 
 https://zaksal.levinni.site
 
+(맡은 부분- 이용자와 관리자의 좌석/사물함 기능)
+
 ### ✨ 개요
 
