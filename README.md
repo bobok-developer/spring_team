@@ -28,7 +28,7 @@ https://zaksal.levinni.site
 <br>
 
 ✔ 모든 입력란은 유효성 검증이 적용되어 있고, 모두 입력해야 가입할 수 있습니다. 또한, 아이디 중복확인도 거쳐야 합니다.
-✔ 주소 입력은 주소 API를 이용하였습니다.
+✔ 주소 입력은 Daum 주소 API를 이용하였습니다.
 <br>
 
 ![](https://images.velog.io/images/admin99/post/af40f00b-b041-498c-af76-2534ed93550d/image.png)
@@ -42,5 +42,30 @@ https://zaksal.levinni.site
 ![](https://images.velog.io/images/admin99/post/568158fe-6e42-4c44-ba46-fc16191b7565/image.png)
 <br>
 
-✔
+✔ 좌석등록/이용 페이지에서 등록할 수 있으며 좌석을 등록할 때 사물함 이용 여부를 결정해야 합니다. (좌석 등록 후에 사물함을 추가로 등록할 수 없습니다.)
+<br>
 
+![](https://images.velog.io/images/admin99/post/0bf402df-3a1e-4da2-991e-0ff3806e46f9/image.png)
+<br>
+
+✔ 결제는 이니시스 결제 API를 이용했으며, 테스트를 위해 실결제는 하지 않고, X 버튼을 누르면 테스트 결제가 실행됩니다.
+<br>
+
+---
+#### 1.2 좌석 이용 기간 연장
+
+![](https://images.velog.io/images/admin99/post/ed1966f7-0b95-4206-b72b-18b9c743b026/image.png)
+<br>
+
+✔ 기간 연장 페이지에서는 현재 이용 중인 좌석 번호와, 사물함 번호, 이용 만료일을 확인할 수 있습니다. 사물함만 따로 연장할 수 없으며 좌석 기간과 함께 연장됩니다. 등록 때와 마찬가지로 결제 API를 거쳐야 기간 연장이 완료됩니다.
+<br>
+
+---
+#### 1.3 좌석 변경
+![](https://images.velog.io/images/admin99/post/cf79b9d1-e49b-4239-856f-a61a4c8e28a3/image.png)
+<br>
+
+✔ 좌석 변경 페이지에서는 만료일과 현재 이용중인 좌석을 확인할 수 있고 좌석 배치도에서 이동할 좌석의 변경 버튼을 누르면 변경됩니다.
+
+### 2. 관리자의 좌석/사물함 관리
+#### 2.1
