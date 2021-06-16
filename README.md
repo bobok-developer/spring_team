@@ -7,6 +7,13 @@ https://zaksal.levinni.site
 
 ## ✨ 개요
 - Spring Framework와 Bootstrap4, Oracle DB, Javascript 등을 이용했습니다.
+- 설계 단계에서 작성한 문서는 [요구사항정의서](https://docs.google.com/spreadsheets/d/1chBl82uc50fDkP0AaRvvIVjLoho__hTbyNSMKHG-swc/edit?usp=sharing)와 [테이블명세서](https://docs.google.com/spreadsheets/d/11s8QidkAVAYh9vcFszlpW8211ZFeKqK0_ljiuiNq2Ww/edit?usp=sharing)가 있으며 구현 완료 후 [테스트케이스](https://docs.google.com/spreadsheets/d/1KaEjcrPBIjrSLesCaJChASqdTQFlX-rlrSJKvKLitmw/edit?usp=sharing)를 작성하였습니다.
+<br>
+
+![](https://images.velog.io/images/admin99/post/52b5fab1-3756-4b9f-97fc-f4c1fb0949e8/image.png)
+
+
+
 - 제가 맡은 부분은 좌석/사물함 기능이며, _이용자_의 **좌석/사물함 등록**과 **이용 기간 연장**, **좌석 변경**과 _관리자_의 회원 중 **미등록 회원의 좌석/사물함 등록**, **이용 회원의 이용 등록 취소**, **이용자의 사물함 등록 취소**를 구현하였습니다.
 <br>
 
@@ -68,4 +75,29 @@ https://zaksal.levinni.site
 ✔ 좌석 변경 페이지에서는 만료일과 현재 이용중인 좌석을 확인할 수 있고 좌석 배치도에서 이동할 좌석의 변경 버튼을 누르면 변경됩니다.
 
 ### 2. 관리자의 좌석/사물함 관리
-#### 2.1
+#### 2.1 미등록 회원의 좌석 등록과, 이용 중인 회원의 이용 등록 취소
+![](https://images.velog.io/images/admin99/post/1d40f3e5-233b-40ac-a3f4-da93424c41d0/image.png)
+
+✔ 회원 중에 현재 좌석을 이용하지 않고 있는 회원의 목록이 보이고 회원의 이름을 누르면 목록과 좌석배치도 사이에 등록 폼이 뜹니다.
+✔ 목록에서 회원 이름으로 검색할 수 있습니다.
+<br>
+
+![](https://images.velog.io/images/admin99/post/e15ae0f4-81c4-42dc-8cc9-a21c415b7dc1/image.png)
+<br>
+
+✔ 좌석배치도에서 좌석을 선택하면 자동으로 '희망 좌석번호' 폼에 입력되고 나머지 부분들을 체크한 후 등록 버튼을 누르면 관리자가 회원을 대신하여 등록할 수 있습니다. 관리자가 등록할 때에는 결제 API를 이용하지 않습니다.
+✔ 좌석 배치도에서 '등록 취소'를 누르면 이용하고 있던 좌석과 사물함이 모두 취소 되고 미등록 회원으로 분류됩니다.
+<br>
+
+---
+#### 2.2 사물함 등록 취소
+- 좌석 등록 시 함께 등록했던 사물함을 취소할 수 있습니다.
+<br>
+
+![](https://images.velog.io/images/admin99/post/fcb4dbac-5cf6-4727-9e66-12b33bbc446a/image.png)
+<br>
+
+✔ 2.1의 이용등록 취소와 다른 점은, 이용 중인 사물함만 취소되기 때문에 '미등록 회원'으로 분류되지 않습니다.
+<br>
+
+---
