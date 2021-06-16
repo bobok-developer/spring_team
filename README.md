@@ -7,6 +7,7 @@ https://zaksal.levinni.site
 
 ## ✨ 개요
 - Spring Framework와 Bootstrap4, Oracle DB, Javascript 등을 이용했습니다.
+- 형상관리는 SVN을 이용하였습니다.
 - 설계 단계에서 작성한 문서는 [요구사항정의서](https://docs.google.com/spreadsheets/d/1chBl82uc50fDkP0AaRvvIVjLoho__hTbyNSMKHG-swc/edit?usp=sharing)와 [테이블명세서](https://docs.google.com/spreadsheets/d/11s8QidkAVAYh9vcFszlpW8211ZFeKqK0_ljiuiNq2Ww/edit?usp=sharing)가 있으며 구현 완료 후 [테스트케이스](https://docs.google.com/spreadsheets/d/1KaEjcrPBIjrSLesCaJChASqdTQFlX-rlrSJKvKLitmw/edit?usp=sharing)를 작성하였습니다.
 <br>
 
